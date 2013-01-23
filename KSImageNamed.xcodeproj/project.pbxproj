@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3727E3B216AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B116AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m */; };
-		3727E3B516AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B416AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.m */; };
+		3727E3B516AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */; };
+		3772077C16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3772077B16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m */; };
 		37A2B52D15FE927F00D9AE1E /* MethodSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A2B52C15FE927F00D9AE1E /* MethodSwizzle.m */; };
+		37B5873616AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B5873516AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m */; };
 		37C5C45D15FE93BB0003BD79 /* IDEFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C5C45C15FE93BB0003BD79 /* IDEFoundation.framework */; };
 		37C6B61116A7CDF4000247EB /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6B61016A7CDF4000247EB /* DVTKit.framework */; };
 		37CEBA7815FE96F40090E015 /* KSImageNamedIndexCompletionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 37CEBA7715FE96F40090E015 /* KSImageNamedIndexCompletionItem.m */; };
@@ -25,12 +27,16 @@
 		3727E3AE16AB341A007DACD3 /* XcodeMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeMisc.h; sourceTree = "<group>"; };
 		3727E3B016AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEIndexCompletionStrategy+KSImageNamed.h"; sourceTree = "<group>"; };
 		3727E3B116AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEIndexCompletionStrategy+KSImageNamed.m"; sourceTree = "<group>"; };
-		3727E3B316AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTCompletingTextView+KSImageNamed.h"; sourceTree = "<group>"; };
-		3727E3B416AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTCompletingTextView+KSImageNamed.m"; sourceTree = "<group>"; };
+		3727E3B316AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTSourceTextView+KSImageNamed.h"; sourceTree = "<group>"; };
+		3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTSourceTextView+KSImageNamed.m"; sourceTree = "<group>"; };
+		3772077A16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEWorkspace+KSImageNamed.h"; sourceTree = "<group>"; };
+		3772077B16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEWorkspace+KSImageNamed.m"; sourceTree = "<group>"; };
 		3791502716AB3B90005A124A /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		3791502916AB3B98005A124A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		37A2B52B15FE927F00D9AE1E /* MethodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodSwizzle.h; sourceTree = "<group>"; };
 		37A2B52C15FE927F00D9AE1E /* MethodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodSwizzle.m; sourceTree = "<group>"; };
+		37B5873416AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionController+KSImageNamed.h"; sourceTree = "<group>"; };
+		37B5873516AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextCompletionController+KSImageNamed.m"; sourceTree = "<group>"; };
 		37C5C45C15FE93BB0003BD79 /* IDEFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEFoundation.framework; path = /Applications/Xcode.app/Contents/Frameworks/IDEFoundation.framework; sourceTree = "<absolute>"; };
 		37C6B61016A7CDF4000247EB /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
 		37CEBA7615FE96F40090E015 /* KSImageNamedIndexCompletionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSImageNamedIndexCompletionItem.h; sourceTree = "<group>"; };
@@ -103,10 +109,14 @@
 				37E5303215FE7E6300753EB4 /* KSImageNamed.m */,
 				37CEBA7615FE96F40090E015 /* KSImageNamedIndexCompletionItem.h */,
 				37CEBA7715FE96F40090E015 /* KSImageNamedIndexCompletionItem.m */,
+				3772077A16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.h */,
+				3772077B16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m */,
 				3727E3B016AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.h */,
 				3727E3B116AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m */,
-				3727E3B316AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.h */,
-				3727E3B416AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.m */,
+				3727E3B316AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.h */,
+				3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */,
+				37B5873416AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.h */,
+				37B5873516AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m */,
 				37A2B52B15FE927F00D9AE1E /* MethodSwizzle.h */,
 				37A2B52C15FE927F00D9AE1E /* MethodSwizzle.m */,
 				3727E3AE16AB341A007DACD3 /* XcodeMisc.h */,
@@ -190,7 +200,9 @@
 				37A2B52D15FE927F00D9AE1E /* MethodSwizzle.m in Sources */,
 				37CEBA7815FE96F40090E015 /* KSImageNamedIndexCompletionItem.m in Sources */,
 				3727E3B216AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m in Sources */,
-				3727E3B516AB350F007DACD3 /* DVTCompletingTextView+KSImageNamed.m in Sources */,
+				3727E3B516AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m in Sources */,
+				37B5873616AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m in Sources */,
+				3772077C16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

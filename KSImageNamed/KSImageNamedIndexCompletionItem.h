@@ -99,6 +99,6 @@
 @property(nonatomic, strong) NSString *fileName;
 @property(nonatomic, assign) BOOL has2x;
 
-- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension prefix:(NSString *)prefix;
+- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension;
 
 @end

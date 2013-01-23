@@ -12,6 +12,7 @@
 
 + (instancetype)sharedPlugin;
 
-- (NSArray *)imageCompletionsForIndex:(id)index prefix:(NSString *)prefix; //IDEIndex
+- (void)rebuildImageCompletionsForIndex:(id)index; //IDEIndex
+- (NSArray *)imageCompletionsForIndex:(id)index; //IDEIndex
 
 @end

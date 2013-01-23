@@ -38,10 +38,10 @@
     id items = [self swizzle_completionItemsForDocumentLocation:arg1 context:arg2 areDefinitive:arg3];
     
     id sourceTextView = [arg2 objectForKey:@"DVTTextCompletionContextTextView"];
-    NSTextStorage *textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
+    DVTCompletingTextView *textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
     
     void(^buildImageCompletions)() = ^{
-        NSRange selectedRange = [sourceTextView selectedRange];
+        NSRange selectedRange = [sourceTextView realSelectedRange];
         
         @try {
             NSString *string = [textStorage string];
@@ -49,7 +49,6 @@
             id previousItem = [item previousItem];
             NSString *itemString = nil;
             BOOL atImageNamed = NO;
-            BOOL useItemStringPrefix = NO;
             
             if (item) {
                 NSRange itemRange = [item range];
@@ -89,7 +88,6 @@
                 
                 if ([previousItemString isEqualToString:@"imageNamed"]) {
                     atImageNamed = YES;
-                    useItemStringPrefix = YES;
                 }
             }
             
@@ -97,7 +95,7 @@
                 //Find index
                 id document = [[[sourceTextView window] windowController] document];
                 id index = [[document performSelector:@selector(workspace)] performSelector:@selector(index)];
-                NSArray *completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index prefix:itemString];
+                NSArray *completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index];
                 
                 if ([completions count] > 0) {
                     [items removeAllObjects];

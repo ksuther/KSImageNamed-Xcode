@@ -10,6 +10,14 @@
 
 //Miscellaneous declarations pulled from class dumps of DVTFoundation, DVTKit, IDEFoundation, IDEKit
 
+@class IDEIndex;
+
+@interface IDEWorkspace : NSObject
+@property(retain) IDEIndex *index;
+
+- (void)_updateIndexableFiles:(id)arg1;
+@end
+
 @interface IDEIndexCollection : NSObject <NSFastEnumeration>
 {
     //IDEIndexDBTempTable *_tempTable;
@@ -60,6 +68,30 @@
 
 @interface DVTCompletingTextView : NSTextView
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)arg1;
+- (NSRange)realSelectedRange;
+- (void)_replaceCellWithCellText:(id)arg1;
+@end
+
+@interface DVTSourceTextView : DVTCompletingTextView
+@end
+
+
+@interface DVTTextCompletionSession : NSObject
+@property(nonatomic) long long selectedCompletionIndex;
+@property(retain) NSArray *filteredCompletionsAlpha;
+@property(retain) NSArray *allCompletions;
+
+- (BOOL)shouldAutoSuggestForTextChange;
+@end
+
+@interface DVTTextCompletionController : NSObject
+@property(retain) DVTTextCompletionSession *currentSession;
+@property(readonly) DVTCompletingTextView *textView;
+@property(getter=isAutoCompletionEnabled) BOOL autoCompletionEnabled;
+
+- (void)textViewDidInsertText;
+- (BOOL)acceptCurrentCompletion;
+- (BOOL)_showCompletionsAtCursorLocationExplicitly:(BOOL)arg1;
 @end
 
 @interface IDEIndexCompletionStrategy : NSObject

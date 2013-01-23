@@ -13,6 +13,7 @@
 NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionInImageCompletion";
 
 @interface KSImageNamed ()
+@property(nonatomic, strong) NSMutableDictionary *imageCompletions;
 @end
 
 @implementation KSImageNamed
@@ -36,16 +37,48 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (id)init
 {
     if ( (self = [super init]) ) {
+        [self setImageCompletions:[NSMutableDictionary dictionary]];
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super dealloc];
 }
 
-- (NSArray *)imageCompletionsForIndex:(id)index prefix:(NSString *)prefix
+- (void)rebuildImageCompletionsForIndex:(id)index
+{
+    [self _rebuildCompletionsForIndex:index];
+}
+
+- (NSArray *)imageCompletionsForIndex:(id)index
+{
+    NSArray *completions = [[self imageCompletions] objectForKey:[index workspaceName]];
+    
+    if (!completions) {
+        completions = [self _rebuildCompletionsForIndex:index];
+    }
+    
+    return completions;
+}
+
+- (NSArray *)_rebuildCompletionsForIndex:(id)index
+{
+    [[self imageCompletions] removeObjectForKey:[index workspaceName]];
+    
+    NSArray *completions = [self _imageCompletionsForIndex:index];
+    
+    if (completions) {
+        [[self imageCompletions] setObject:completions forKey:[index workspaceName]];
+    }
+    
+    return completions;
+}
+
+- (NSArray *)_imageCompletionsForIndex:(id)index
 {
     id result = [index filesContaining:@"" anchorStart:NO anchorEnd:NO subsequence:NO ignoreCase:YES cancelWhen:nil];
     NSSet *imageTypes = [NSSet setWithArray:[NSImage imageTypes]];
@@ -57,16 +90,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     result = [[result uniqueObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [[obj1 fileName] caseInsensitiveCompare:[obj2 fileName]];
     }];
-    
-    //Handle the @" prefix that people may type when using imageNamed
-    //Doesn't automatically pop up autocomplete but at least it'll show matches if they explicitly show autocomplete
-    if (![prefix isEqualToString:@"@"]) {
-        if ([prefix hasPrefix:@"@\""]) {
-            prefix = @"@\"";
-        } else {
-            prefix = nil;
-        }
-    }
     
     BOOL includeExtension = [[NSUserDefaults standardUserDefaults] boolForKey:KSShowExtensionInImageCompletionDefaultKey];
     
@@ -89,7 +112,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
             }
             
             if (!skip && [[nextResult fileDataTypePresumed] conformsToAnyIdentifierInSet:imageTypes]) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileName:fileName includeExtension:includeExtension prefix:prefix];
+                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileName:fileName includeExtension:includeExtension];
                 
                 [completionItems addObject:imageCompletion];
                 [imageCompletionItems setObject:imageCompletion forKey:fileName];

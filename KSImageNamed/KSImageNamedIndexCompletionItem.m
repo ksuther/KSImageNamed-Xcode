@@ -17,21 +17,13 @@
 
 @implementation KSImageNamedIndexCompletionItem
 
-- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension prefix:(NSString *)prefix
+- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension
 {
     if ( (self = [super init]) ) {
         [self setFileName:fileName];
         
         _imageIncludeExtension = includeExtension;
         _imageCompletionText = [self _imageNamedText];
-        
-        if (prefix) {
-            //Adjust the completion text based on the prefix
-            //This allows completion to continue if someone starts typing @ or @"
-            NSRange range = [_imageCompletionText rangeOfString:prefix options:NSAnchoredSearch];
-            
-            _imageCompletionText = [_imageCompletionText substringFromIndex:NSMaxRange(range)];
-        }
     }
     return self;
 }
