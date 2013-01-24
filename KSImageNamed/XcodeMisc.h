@@ -10,7 +10,9 @@
 
 //Miscellaneous declarations pulled from class dumps of DVTFoundation, DVTKit, IDEFoundation, IDEKit
 
-@class IDEIndex;
+@interface IDEIndex : NSObject
+- (void)close;
+@end
 
 @interface IDEWorkspace : NSObject
 @property(retain) IDEIndex *index;
