@@ -64,8 +64,8 @@
                 NSRange newlineRange = [itemString rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch];
                 
                 if (newlineRange.location != NSNotFound) {
-                    itemRange.length = newlineRange.location - itemRange.location;
-                    itemRange.location = newlineRange.location;
+                    itemRange.length = itemRange.length - newlineRange.location;
+                    itemRange.location = itemRange.location + newlineRange.location;
                     
                     //Extra range check to prevent huge itemRange.location
                     //Checking length and NSMaxRange in case NSMaxRange overflows
