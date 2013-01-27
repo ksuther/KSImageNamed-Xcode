@@ -8,6 +8,7 @@
 
 #import "IDEIndexCompletionStrategy+KSImageNamed.h"
 #import "KSImageNamed.h"
+#import "KSImageNamedIndexCompletionItem.h"
 #import "MethodSwizzle.h"
 
 @implementation IDEIndexCompletionStrategy (KSImageNamed)
@@ -49,7 +50,7 @@
             id previousItem = [item previousItem];
             NSString *itemString = nil;
             BOOL atImageNamed = NO;
-            
+
             if (item) {
                 NSRange itemRange = [item range];
                 
@@ -73,7 +74,7 @@
                         itemString = [string substringWithRange:itemRange];
                     }
                 }
-                
+
                 atImageNamed = [itemString rangeOfString:@" imageNamed:"].location != NSNotFound;
             }
             
@@ -83,12 +84,10 @@
                 if (NSMaxRange(previousItemRange) > selectedRange.location) {
                     previousItemRange.length -= NSMaxRange(previousItemRange) - selectedRange.location;
                 }
-                
+
                 NSString *previousItemString = [string substringWithRange:previousItemRange];
-                
-                if ([previousItemString isEqualToString:@"imageNamed"]) {
-                    atImageNamed = YES;
-                }
+
+                atImageNamed = [previousItemString isEqualToString:@"imageNamed"];
             }
             
             if (atImageNamed) {
@@ -98,8 +97,7 @@
                 NSArray *completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index];
                 
                 if ([completions count] > 0) {
-                    [items removeAllObjects];
-                    [items addObjectsFromArray:completions];
+                    [self merge:completions into:items];
                 }
             }
         } @catch (NSException *exception) {
@@ -115,6 +113,22 @@
     }
     
     return items;
+}
+
+- (void)merge:(NSArray *)origin into:(NSMutableArray *)destination
+{
+    __block NSRange destinationRange = NSMakeRange(0, [destination count]);
+    [origin enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSUInteger insertionIdx = [destination indexOfObject:obj
+                                               inSortedRange:destinationRange
+                                                     options:NSBinarySearchingInsertionIndex|NSBinarySearchingLastEqual
+                                             usingComparator:^NSComparisonResult(IDEIndexCompletionItem *left, IDEIndexCompletionItem *right) {
+                                                 return [left.name compare:right.name];
+                                             }];
+        [destination insertObject:obj atIndex:insertionIdx];
+        destinationRange.location = insertionIdx;
+        destinationRange.length = [destination count] - insertionIdx;
+    }];
 }
 
 @end
