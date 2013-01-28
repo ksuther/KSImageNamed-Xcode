@@ -123,8 +123,9 @@
                                                inSortedRange:destinationRange
                                                      options:NSBinarySearchingInsertionIndex|NSBinarySearchingLastEqual
                                              usingComparator:^NSComparisonResult(IDEIndexCompletionItem *left, IDEIndexCompletionItem *right) {
-                                                 return [left.name compare:right.name];
+                                                 return [left.name caseInsensitiveCompare:right.name];
                                              }];
+
         [destination insertObject:obj atIndex:insertionIdx];
         destinationRange.location = insertionIdx;
         destinationRange.length = [destination count] - insertionIdx;
