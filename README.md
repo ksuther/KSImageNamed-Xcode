@@ -17,6 +17,7 @@ Developed and tested against Xcode 4.5.2 on 10.8. Also appears to work with Xcod
 
 ## How do I include file extensions when autocompleting?
 
+Enter the following command and relaunch Xcode:  
 `defaults write com.apple.dt.Xcode KSShowExtensionInImageCompletion -bool YES`
 
 ## Possible future improvements
