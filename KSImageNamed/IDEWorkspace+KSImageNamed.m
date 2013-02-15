@@ -21,12 +21,7 @@
 {
     [self swizzle__updateIndexableFiles:arg1];
     
-    //Wait a bit to allow IDEIndex to catch up
-    //Another option is to listen for IDEIndexDidIndexWorkspaceNotification and update then, but that doesn't work correctly when adding files
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[KSImageNamed sharedPlugin] rebuildImageCompletionsForIndex:[self index]];
-    });
+    [[KSImageNamed sharedPlugin] indexNeedsUpdate:[self index]];
 }
 
 @end

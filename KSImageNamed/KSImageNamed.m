@@ -12,8 +12,11 @@
 
 NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionInImageCompletion";
 
-@interface KSImageNamed ()
+@interface KSImageNamed () {
+    NSTimer *_updateTimer;
+}
 @property(nonatomic, strong) NSMutableDictionary *imageCompletions;
+@property(nonatomic, strong) NSMutableSet *indexesToUpdate;
 @end
 
 @implementation KSImageNamed
@@ -38,6 +41,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 {
     if ( (self = [super init]) ) {
         [self setImageCompletions:[NSMutableDictionary dictionary]];
+        [self setIndexesToUpdate:[NSMutableSet set]];
     }
     return self;
 }
@@ -49,9 +53,13 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     [super dealloc];
 }
 
-- (void)rebuildImageCompletionsForIndex:(id)index
+- (void)indexNeedsUpdate:(id)index
 {
-    [self _rebuildCompletionsForIndex:index];
+    //Coalesce completion rebuilds to avoid hangs when Xcode rebuilds an index one file a time
+    [[self indexesToUpdate] addObject:index];
+    
+    [_updateTimer invalidate];
+    _updateTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(_rebuildCompletionsTimerFired:) userInfo:nil repeats:NO];
 }
 
 - (void)removeImageCompletionsForIndex:(id)index
@@ -72,6 +80,15 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     }
     
     return completions;
+}
+
+- (void)_rebuildCompletionsTimerFired:(NSTimer *)timer
+{
+    for (id nextIndex in [self indexesToUpdate]) {
+        [self _rebuildCompletionsForIndex:nextIndex];
+    }
+    
+    [[self indexesToUpdate] removeAllObjects];
 }
 
 - (NSArray *)_rebuildCompletionsForIndex:(id)index

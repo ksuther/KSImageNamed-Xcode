@@ -12,7 +12,7 @@
 
 + (instancetype)sharedPlugin;
 
-- (void)rebuildImageCompletionsForIndex:(id)index; //IDEIndex
+- (void)indexNeedsUpdate:(id)index; //IDEIndex
 - (void)removeImageCompletionsForIndex:(id)index; //IDEIndex
 - (NSArray *)imageCompletionsForIndex:(id)index; //IDEIndex
 
