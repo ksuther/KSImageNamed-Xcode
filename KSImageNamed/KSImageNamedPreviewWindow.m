@@ -67,7 +67,13 @@
     _image = image;
     NSString *infoString = @"";
     if (image) {
-        infoString = [NSString stringWithFormat:@"%d × %d", (int)image.size.width, (int)image.size.height];
+        CGFloat width = image.size.width;
+        CGFloat height = image.size.height;
+        for (NSImageRep *representation in image.representations) {
+            width = fmax(width, representation.pixelsWide);
+            height = fmax(height, representation.pixelsHigh);
+        }
+        infoString = [NSString stringWithFormat:@"%d × %d", (int)round(width), (int)round(height)];
     }
     _sizeLabel.stringValue = infoString;
     
