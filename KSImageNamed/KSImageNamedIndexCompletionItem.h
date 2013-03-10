@@ -96,9 +96,10 @@
 
 @interface KSImageNamedIndexCompletionItem : IDEIndexCompletionItem
 
-@property(nonatomic, strong) NSString *fileName;
+@property (nonatomic, strong) NSURL *fileURL;
+@property(nonatomic, strong, readonly) NSString *fileName;
 @property(nonatomic, assign) BOOL has2x;
 
-- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension;
+- (id)initWithFileURL:(NSURL *)fileURL includeExtension:(BOOL)includeExtension;
 
 @end

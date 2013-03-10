@@ -66,6 +66,8 @@
 - (id)stringConstantAtLocation:(unsigned long long)arg1; //DVTSourceModel
 
 - (id)previousItem; //DVTSourceModelItem
+
+- (id)_listWindowController; //DVTTextCompletionSession
 @end
 
 @interface DVTCompletingTextView : NSTextView
@@ -94,6 +96,7 @@
 - (void)textViewDidInsertText;
 - (BOOL)acceptCurrentCompletion;
 - (BOOL)_showCompletionsAtCursorLocationExplicitly:(BOOL)arg1;
+- (BOOL)textViewShouldChangeTextInRange:(NSRange)arg1 replacementString:(id)replacementString;
 @end
 
 @interface IDEIndexCompletionStrategy : NSObject

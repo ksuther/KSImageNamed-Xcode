@@ -8,12 +8,14 @@
 
 #import "KSImageNamed.h"
 #import "KSImageNamedIndexCompletionItem.h"
+#import "KSImageNamedPreviewWindow.h"
 #import "XcodeMisc.h"
 
 NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionInImageCompletion";
 
 @interface KSImageNamed () {
     NSTimer *_updateTimer;
+    KSImageNamedPreviewWindow *_imageWindow;
 }
 @property(nonatomic, strong) NSMutableDictionary *imageCompletions;
 @property(nonatomic, strong) NSMutableSet *indexesToUpdate;
@@ -33,7 +35,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 	dispatch_once(&onceToken, ^{
 		sharedPlugin = [[self alloc] init];
 	});
-    
+
     return sharedPlugin;
 }
 
@@ -51,6 +53,14 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super dealloc];
+}
+
+- (KSImageNamedPreviewWindow *)imageWindow
+{
+    if (!_imageWindow) {
+        _imageWindow = [[KSImageNamedPreviewWindow alloc] init];
+    }
+    return _imageWindow;
 }
 
 - (void)indexNeedsUpdate:(id)index
@@ -145,7 +155,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
             }
             
             if (!skip && [[nextResult fileDataTypePresumed] conformsToAnyIdentifierInSet:imageTypes]) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileName:fileName includeExtension:includeExtension];
+                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileURL:[nextResult fileReferenceURL] includeExtension:includeExtension];
                 
                 [completionItems addObject:imageCompletion];
                 [imageCompletionItems setObject:imageCompletion forKey:fileName];
