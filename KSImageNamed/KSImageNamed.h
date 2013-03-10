@@ -7,10 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class KSImageNamedPreviewWindow;
 
 @interface KSImageNamed : NSObject
 
 + (instancetype)sharedPlugin;
+
+@property (nonatomic, strong, readonly) KSImageNamedPreviewWindow *imageWindow;
 
 - (void)indexNeedsUpdate:(id)index; //IDEIndex
 - (void)removeImageCompletionsForIndex:(id)index; //IDEIndex

@@ -17,10 +17,10 @@
 
 @implementation KSImageNamedIndexCompletionItem
 
-- (id)initWithFileName:(NSString *)fileName includeExtension:(BOOL)includeExtension
+- (id)initWithFileURL:(NSURL *)fileURL includeExtension:(BOOL)includeExtension
 {
     if ( (self = [super init]) ) {
-        [self setFileName:fileName];
+        [self setFileURL:fileURL];
         
         _imageIncludeExtension = includeExtension;
         _imageCompletionText = [self _imageNamedText];
@@ -36,6 +36,11 @@
 - (long long)priority
 {
     return 9999;
+}
+
+- (NSString *)fileName
+{
+    return [self _fileName];
 }
 
 - (NSString *)name
@@ -72,7 +77,7 @@
 
 - (NSString *)_fileName
 {
-    NSString *fileName = [self fileName];
+    NSString *fileName = [[self fileURL] lastPathComponent];
     
     if (!_imageIncludeExtension) {
         fileName = [fileName stringByDeletingPathExtension];
