@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F4ED06816ECBE7500250F46 /* KSImageNamedPreviewWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4ED06716ECBE7500250F46 /* KSImageNamedPreviewWindow.m */; };
 		3727E3B216AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B116AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m */; };
 		3727E3B516AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */; };
 		37642FEA16B0C754002CC70F /* IDEIndex+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642FE916B0C754002CC70F /* IDEIndex+KSImageNamed.m */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F4ED06616ECBE7500250F46 /* KSImageNamedPreviewWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSImageNamedPreviewWindow.h; sourceTree = "<group>"; };
+		1F4ED06716ECBE7500250F46 /* KSImageNamedPreviewWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSImageNamedPreviewWindow.m; sourceTree = "<group>"; };
 		3727E3AE16AB341A007DACD3 /* XcodeMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeMisc.h; sourceTree = "<group>"; };
 		3727E3B016AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEIndexCompletionStrategy+KSImageNamed.h"; sourceTree = "<group>"; };
 		3727E3B116AB34AA007DACD3 /* IDEIndexCompletionStrategy+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEIndexCompletionStrategy+KSImageNamed.m"; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 			children = (
 				37E5303115FE7E6300753EB4 /* KSImageNamed.h */,
 				37E5303215FE7E6300753EB4 /* KSImageNamed.m */,
+				1F4ED06616ECBE7500250F46 /* KSImageNamedPreviewWindow.h */,
+				1F4ED06716ECBE7500250F46 /* KSImageNamedPreviewWindow.m */,
 				37CEBA7615FE96F40090E015 /* KSImageNamedIndexCompletionItem.h */,
 				37CEBA7715FE96F40090E015 /* KSImageNamedIndexCompletionItem.m */,
 				3772077A16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.h */,
@@ -209,6 +214,7 @@
 				37B5873616AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m in Sources */,
 				3772077C16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m in Sources */,
 				37642FEA16B0C754002CC70F /* IDEIndex+KSImageNamed.m in Sources */,
+				1F4ED06816ECBE7500250F46 /* KSImageNamedPreviewWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
