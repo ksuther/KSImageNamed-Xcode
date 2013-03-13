@@ -89,7 +89,10 @@
 - (void)_updateDisplay
 {
     int factor = 1;
-
+    if (!_image) {
+        return;
+    }
+    
     //if image doesn't fit screen, scale by even factors until it does
     while ((_frameTopRightPoint.y < (_image.size.height / factor)) || (_frameTopRightPoint.x < (_image.size.width / factor))) {
         factor += 1;
