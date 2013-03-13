@@ -72,7 +72,7 @@
 {
     NSString *displayFormat = [self has2x] ? @"%@ (%@, 2x)" : @"%@ (%@)";
     
-    return [NSString stringWithFormat:displayFormat, [self _imageNamedText], [[self fileName] pathExtension]];
+    return [NSString stringWithFormat:displayFormat, [self _imageNamedText], [[self fileURL] pathExtension]];
 }
 
 - (NSString *)_fileName
