@@ -93,8 +93,11 @@
         return;
     }
     
+    //Crash on multi monitors(Display) becuase some time value is in -ve
+    NSPoint tempPoint = CGPointMake(abs(_frameTopRightPoint.x), abs(_frameTopRightPoint.y));
+    
     //if image doesn't fit screen, scale by even factors until it does
-    while ((_frameTopRightPoint.y < (_image.size.height / factor)) || (_frameTopRightPoint.x < (_image.size.width / factor))) {
+    while ((tempPoint.y < (_image.size.height / factor)) || (tempPoint.x < (_image.size.width / factor))) {
         factor += 1;
     }
     
