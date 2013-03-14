@@ -75,6 +75,8 @@
                 }
                 
                 NSRange imageNamedRange = [itemString rangeOfString:@" imageNamed:"];
+                NSRange spriteNamedRange = [itemString rangeOfString:@" spriteWithFile:"];
+
                 
                 if (imageNamedRange.location != NSNotFound) {
                     atImageNamed = YES;
@@ -83,6 +85,13 @@
                     //For now just check if the insertion point is past the closing bracket. This won't work if an image has a bracket in the name and other edge cases.
                     //It'd probably be cleaner to use the source model to determine this
                     NSRange closeBracketRange = [itemString rangeOfString:@"]" options:0 range:NSMakeRange(imageNamedRange.location, [itemString length] - imageNamedRange.location)];
+                    
+                    if (closeBracketRange.location != NSNotFound) {
+                        atImageNamed = NO;
+                    }
+                }else if (spriteNamedRange.location != NSNotFound){
+                    atImageNamed = YES;
+                    NSRange closeBracketRange = [itemString rangeOfString:@"]" options:0 range:NSMakeRange(spriteNamedRange.location, [itemString length] - spriteNamedRange.location)];
                     
                     if (closeBracketRange.location != NSNotFound) {
                         atImageNamed = NO;
@@ -99,7 +108,7 @@
                 
                 NSString *previousItemString = [string substringWithRange:previousItemRange];
                 
-                if ([previousItemString isEqualToString:@"imageNamed"]) {
+                if ([previousItemString isEqualToString:@"imageNamed"] || [previousItemString isEqualToString:@"spriteWithFile"]) {
                     atImageNamed = YES;
                 }
             }

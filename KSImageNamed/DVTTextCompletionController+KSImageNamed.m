@@ -31,14 +31,23 @@
         @try {
             NSRange range = [[self textView] realSelectedRange];
             NSString * const stringToMatch = @"mage imageNamed:";
+            NSString * const spriteStringToMatch = @"rite spriteWithFile:";
+
             
             //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
-            if (range.location > [stringToMatch length]) {
+            if (range.location > [stringToMatch length] || range.location > [spriteStringToMatch length]) {
                 NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [stringToMatch length], [stringToMatch length])];
                 
                 if ([insertedString isEqualToString:stringToMatch]) {
                     [[self textView] _replaceCellWithCellText:@""];
                     [self _showCompletionsAtCursorLocationExplicitly:YES];
+                }else{
+                    NSString *spriteinsertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [spriteStringToMatch length], [spriteStringToMatch length])];
+                    
+                    if ([spriteinsertedString isEqualToString:spriteStringToMatch]) {
+                        [[self textView] _replaceCellWithCellText:@""];
+                        [self _showCompletionsAtCursorLocationExplicitly:YES];
+                    }
                 }
             }
         } @catch (NSException *exception) {

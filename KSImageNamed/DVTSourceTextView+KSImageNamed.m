@@ -41,6 +41,11 @@
             }
             
             shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
+            
+            if (!shouldAutoComplete) {
+                shouldAutoComplete = [line hasSuffix:@"rite spriteWithFile:"];
+            }
+            
         } @catch (NSException *exception) {
             //I'd rather not crash if Xcode chokes on something
         }
