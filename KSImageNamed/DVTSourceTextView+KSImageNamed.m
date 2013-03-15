@@ -40,10 +40,16 @@
                 }
             }
             
-            shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
-            
-            if (!shouldAutoComplete) {
-                shouldAutoComplete = [line hasSuffix:@"rite spriteWithFile:"];
+//            shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
+//            
+//            if (!shouldAutoComplete) {
+//                shouldAutoComplete = [line hasSuffix:@"rite spriteWithFile:"];
+//            }
+            for (NSString *tempString in CompletionList) {
+                shouldAutoComplete = [line hasSuffix:tempString];
+                if (shouldAutoComplete) {
+                    break;
+                }
             }
             
         } @catch (NSException *exception) {
