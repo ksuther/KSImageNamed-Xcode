@@ -131,7 +131,22 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     
     //Sort results so @2x is sorted after the 1x image
     result = [[result uniqueObjects] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [[obj1 fileName] caseInsensitiveCompare:[obj2 fileName]];
+        NSString *fileName1 = [obj1 fileName];
+        NSString *fileName2 = [obj2 fileName];
+        NSComparisonResult result = [fileName1 caseInsensitiveCompare:fileName2];
+        BOOL is2xiPad1 = [[fileName1 stringByDeletingPathExtension] hasSuffix:@"@2x~ipad"];
+        BOOL is2xiPad2 = [[fileName2 stringByDeletingPathExtension] hasSuffix:@"@2x~ipad"];
+        
+        //@2x~ipad should be sorted after ~ipad
+        //This ensures that the 2x detection in the loop below works correctly for 2x iPad images
+        //Otherwise @2x~ipad will be checked before ~ipad and the 2x property won't be set correctly
+        if (is2xiPad1 && !is2xiPad2) {
+            result = NSOrderedDescending;
+        } else if (!is2xiPad1 && is2xiPad2) {
+            result = NSOrderedAscending;
+        }
+        
+        return result;
     }];
     
     BOOL includeExtension = [[NSUserDefaults standardUserDefaults] boolForKey:KSShowExtensionInImageCompletionDefaultKey];
@@ -143,9 +158,16 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
             //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
             NSString *imageName = [fileName stringByDeletingPathExtension];
             BOOL skip = NO;
+            NSString *normalFileName = nil;
             
             if ([imageName hasSuffix:@"@2x"]) {
-                NSString *normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+            } else if ([imageName hasSuffix:@"@2x~ipad"]) {
+                //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
+                normalFileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+            }
+            
+            if (normalFileName) {
                 KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
                 
                 if (existingCompletionItem) {
