@@ -92,8 +92,7 @@
     
     if (!image) {
         [imageWindow orderOut:self];
-    }
-    else {
+    } else {
         NSRect imgRect = NSMakeRect(0.0, 0.0, image.size.width, image.size.height);
         
         NSImageView *imageView = [[NSImageView alloc] initWithFrame:imgRect];
@@ -101,15 +100,16 @@
         
         id currentDVTTextCompletionSession = [self currentSession];
         id currentDVTTextCompletionListWindowController = [currentDVTTextCompletionSession _listWindowController];
-
         NSWindow *completionListWindow = [currentDVTTextCompletionListWindowController window];
         
-        NSRect completionListWindowFrame = completionListWindow ? completionListWindow.frame : NSMakeRect(image.size.width, image.size.height, 0.0, 0.0);
-        
-        [imageWindow setFrameTopRightPoint:NSMakePoint(completionListWindowFrame.origin.x - 1.0,
-                                                      completionListWindowFrame.origin.y + completionListWindowFrame.size.height)];
-        
-        [[NSApp keyWindow] addChildWindow:imageWindow ordered:NSWindowAbove];
+        if ([completionListWindow isVisible]) {
+            NSRect completionListWindowFrame = completionListWindow ? completionListWindow.frame : NSMakeRect(image.size.width, image.size.height, 0.0, 0.0);
+            
+            [imageWindow setFrameTopRightPoint:NSMakePoint(completionListWindowFrame.origin.x - 1.0,
+                                                          completionListWindowFrame.origin.y + completionListWindowFrame.size.height)];
+            
+            [[NSApp keyWindow] addChildWindow:imageWindow ordered:NSWindowAbove];
+        }
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
