@@ -99,6 +99,10 @@
 - (BOOL)textViewShouldChangeTextInRange:(NSRange)arg1 replacementString:(id)replacementString;
 @end
 
+@interface DVTTextCompletionListWindowController : NSWindowController
+- (id)_selectedCompletionItem;
+@end
+
 @interface IDEIndexCompletionStrategy : NSObject
 - (id)completionItemsForDocumentLocation:(id)arg1 context:(id)arg2 areDefinitive:(char *)arg3;
 @end

@@ -102,7 +102,7 @@
         id currentDVTTextCompletionListWindowController = [currentDVTTextCompletionSession _listWindowController];
         NSWindow *completionListWindow = [currentDVTTextCompletionListWindowController window];
         
-        if ([completionListWindow isVisible]) {
+        if ([completionListWindow isVisible] && [[currentDVTTextCompletionListWindowController _selectedCompletionItem] isKindOfClass:[KSImageNamedIndexCompletionItem class]]) {
             NSRect completionListWindowFrame = completionListWindow ? completionListWindow.frame : NSMakeRect(image.size.width, image.size.height, 0.0, 0.0);
             
             [imageWindow setFrameTopRightPoint:NSMakePoint(completionListWindowFrame.origin.x - 1.0,
