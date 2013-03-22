@@ -62,7 +62,7 @@
             
             NSInteger indexOfString = [imageCompletions indexOfObjectPassingTest:^BOOL(KSImageNamedIndexCompletionItem *item, NSUInteger idx, BOOL *stop) {
                 if ([item.fileName isEqualToString:replacementString]) {
-                    stop = YES;
+                    *stop = YES;
                     return YES;
                 }
                 else {
