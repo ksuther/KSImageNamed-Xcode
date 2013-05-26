@@ -99,6 +99,7 @@
 @property(nonatomic, strong) NSURL *fileURL;
 @property(nonatomic, strong, readonly) NSString *fileName;
 @property(nonatomic, assign) BOOL has2x;
+@property(nonatomic, assign) BOOL has1x;
 
 - (id)initWithFileURL:(NSURL *)fileURL includeExtension:(BOOL)includeExtension;
 
