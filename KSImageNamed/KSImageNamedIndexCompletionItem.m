@@ -89,7 +89,14 @@
 - (NSString *)_fileName
 {
     NSString *fileName = [[self fileURL] lastPathComponent];
-    
+    NSString *imageName = [fileName stringByDeletingPathExtension];
+
+    if ([imageName hasSuffix:@"@2x"]) {
+        fileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+    } else if ([imageName hasSuffix:@"@2x~ipad"]) {
+        //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
+        fileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+    }
     if (!_imageIncludeExtension) {
         fileName = [fileName stringByDeletingPathExtension];
     }
