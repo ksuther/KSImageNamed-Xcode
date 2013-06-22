@@ -12,6 +12,7 @@
 @interface KSImageNamed : NSObject
 
 + (instancetype)sharedPlugin;
++ (BOOL)shouldLoadPlugin;
 
 @property (nonatomic, strong, readonly) KSImageNamedPreviewWindow *imageWindow;
 

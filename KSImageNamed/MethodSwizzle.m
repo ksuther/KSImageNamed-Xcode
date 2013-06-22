@@ -22,32 +22,37 @@
  */
 
 #import "MethodSwizzle.h"
+#import "KSImageNamed.h"
 #import <objc/objc-class.h>
 
 void MethodSwizzle(Class aClass, SEL orig_sel, SEL alt_sel)
 {
-    Method orig_method = nil, alt_method = nil;
-	
-    // First, look for the methods
-    orig_method = class_getInstanceMethod(aClass, orig_sel);
-    alt_method = class_getInstanceMethod(aClass, alt_sel);
-	
-    // If both are found, swizzle them
-    if ((orig_method != nil) && (alt_method != nil)) {
-        method_exchangeImplementations(orig_method, alt_method);
-	}
+    if ([KSImageNamed shouldLoadPlugin]) {
+        Method orig_method = nil, alt_method = nil;
+        
+        // First, look for the methods
+        orig_method = class_getInstanceMethod(aClass, orig_sel);
+        alt_method = class_getInstanceMethod(aClass, alt_sel);
+        
+        // If both are found, swizzle them
+        if ((orig_method != nil) && (alt_method != nil)) {
+            method_exchangeImplementations(orig_method, alt_method);
+        }
+    }
 }
 
 void MethodSwizzleClass(Class aClass, SEL orig_sel, SEL alt_sel)
 {
-    Method orig_method = nil, alt_method = nil;
-	
-    // First, look for the methods
-    orig_method = class_getClassMethod(aClass, orig_sel);
-    alt_method = class_getClassMethod(aClass, alt_sel);
-	
-    // If both are found, swizzle them
-    if ((orig_method != nil) && (alt_method != nil)) {
-        method_exchangeImplementations(orig_method, alt_method);
-	}
+    if ([KSImageNamed shouldLoadPlugin]) {
+        Method orig_method = nil, alt_method = nil;
+        
+        // First, look for the methods
+        orig_method = class_getClassMethod(aClass, orig_sel);
+        alt_method = class_getClassMethod(aClass, alt_sel);
+        
+        // If both are found, swizzle them
+        if ((orig_method != nil) && (alt_method != nil)) {
+            method_exchangeImplementations(orig_method, alt_method);
+        }
+    }
 }
