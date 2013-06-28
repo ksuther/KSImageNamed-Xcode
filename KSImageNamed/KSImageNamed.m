@@ -27,7 +27,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 {
     if ([self shouldLoadPlugin]) {
         [self sharedPlugin];
-    } else {
+    } else if ([self isInXcode]) {
         NSLog(@"Encountered unknown version of Xcode, KSImageNamed is not loading.");
     }
 }
@@ -43,11 +43,18 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     return sharedPlugin;
 }
 
++ (BOOL)isInXcode
+{
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    
+    return bundleIdentifier && [bundleIdentifier caseInsensitiveCompare:@"com.apple.dt.Xcode"] == NSOrderedSame;
+}
+
 + (BOOL)shouldLoadPlugin
 {
     NSString *xcodeShortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     
-    return [xcodeShortVersion compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending;
+    return [self isInXcode] && [xcodeShortVersion compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending;
 }
 
 - (id)init
