@@ -106,6 +106,44 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     return completions;
 }
 
+- (NSSet *)completionStringsForType:(KSImageNamedCompletionStringType)type
+{
+    //Pulls completions out of Completions.plist and creates arrays so the rest of the plugin can do lookups to see if it should be autocompleting a particular method
+    //The three different strings are needed because this plugin does raw string matching rather than doing anything fancy like looking at the AST
+    static NSMutableSet *classAndMethodCompletionStrings;
+    static NSMutableSet *methodDeclarationCompletionStrings;
+    static NSMutableSet *methodNameCompletionStrings;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSURL *completionsURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"Completions" withExtension:@"plist"];
+        NSArray *completionStrings = [NSArray arrayWithContentsOfURL:completionsURL];
+        
+        classAndMethodCompletionStrings = [[NSMutableSet alloc] init];
+        methodDeclarationCompletionStrings = [[NSMutableSet alloc] init];
+        methodNameCompletionStrings = [[NSMutableSet alloc] init];
+        
+        for (NSDictionary *nextCompletionDictionary in completionStrings) {
+            [classAndMethodCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"classAndMethod"]];
+            [methodDeclarationCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodDeclaration"]];
+            [methodNameCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodName"]];
+        }
+    });
+    
+    NSSet *completionStrings = nil;
+    
+    if (type == KSImageNamedCompletionStringTypeClassAndMethod) {
+        completionStrings = classAndMethodCompletionStrings;
+    } else if (type == KSImageNamedCompletionStringTypeMethodDeclaration) {
+        completionStrings = methodDeclarationCompletionStrings;
+    } else if (type == KSImageNamedCompletionStringTypeMethodName) {
+        completionStrings = methodNameCompletionStrings;
+    }
+    
+    return completionStrings;
+}
+
+#pragma mark - Private
+
 - (void)_rebuildCompletionsTimerFired:(NSTimer *)timer
 {
     for (id nextIndex in [self indexesToUpdate]) {

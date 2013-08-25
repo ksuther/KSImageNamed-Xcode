@@ -31,15 +31,16 @@
         @try {
             //Xcode 4 uses realSelectedRange, Xcode 5 can use selectedRange
             NSRange range = [[self textView] respondsToSelector:@selector(realSelectedRange)] ? [[self textView] realSelectedRange] : [[self textView] selectedRange];
-            NSString * const stringToMatch = @"mage imageNamed:";
             
-            //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
-            if (range.location > [stringToMatch length]) {
-                NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [stringToMatch length], [stringToMatch length])];
-                
-                if ([insertedString isEqualToString:stringToMatch]) {
-                    [[self textView] insertText:@"" replacementRange:range];
-                    [self _showCompletionsAtCursorLocationExplicitly:YES];
+            for (NSString *nextClassAndMethod in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
+                //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
+                if (range.location > [nextClassAndMethod length]) {
+                    NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [nextClassAndMethod length], [nextClassAndMethod length])];
+                    
+                    if ([insertedString isEqualToString:nextClassAndMethod]) {
+                        [[self textView] insertText:@"" replacementRange:range];
+                        [self _showCompletionsAtCursorLocationExplicitly:YES];
+                    }
                 }
             }
         } @catch (NSException *exception) {

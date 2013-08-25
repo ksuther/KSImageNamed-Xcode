@@ -7,17 +7,26 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
+typedef NS_ENUM(NSInteger, KSImageNamedCompletionStringType) {
+    KSImageNamedCompletionStringTypeClassAndMethod = 0,
+    KSImageNamedCompletionStringTypeMethodDeclaration = 1,
+    KSImageNamedCompletionStringTypeMethodName = 2,
+};
+
 @class KSImageNamedPreviewWindow;
 
 @interface KSImageNamed : NSObject
 
+@property (nonatomic, strong, readonly) KSImageNamedPreviewWindow *imageWindow;
+
 + (instancetype)sharedPlugin;
 + (BOOL)shouldLoadPlugin;
-
-@property (nonatomic, strong, readonly) KSImageNamedPreviewWindow *imageWindow;
 
 - (void)indexNeedsUpdate:(id)index; //IDEIndex
 - (void)removeImageCompletionsForIndex:(id)index; //IDEIndex
 - (NSArray *)imageCompletionsForIndex:(id)index; //IDEIndex
+
+- (NSSet *)completionStringsForType:(KSImageNamedCompletionStringType)type;
 
 @end

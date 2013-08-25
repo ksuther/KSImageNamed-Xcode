@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>classAndMethod</key>
+		<string>mage imageNamed:</string>
+		<key>methodDeclaration</key>
+		<string> imageNamed:</string>
+		<key>methodName</key>
+		<string>imageNamed</string>
+		<key>comment</key>
+		<string>Standard NSImage/UIImage method</string>
+	</dict>
+	<dict>
+		<key>classAndMethod</key>
+		<string>prite spriteWithFile:</string>
+		<key>methodDeclaration</key>
+		<string> spriteWithFile:</string>
+		<key>methodName</key>
+		<string>spriteWithFile</string>
+		<key>comment</key>
+		<string>cocos2d&apos;s CCSprite</string>
+	</dict>
+</array>
+</plist>

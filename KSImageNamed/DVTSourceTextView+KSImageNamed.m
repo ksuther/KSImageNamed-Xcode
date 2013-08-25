@@ -9,6 +9,7 @@
 #import "DVTSourceTextView+KSImageNamed.h"
 #import "MethodSwizzle.h"
 #import "XcodeMisc.h"
+#import "KSImageNamed.h"
 
 @implementation DVTSourceTextView (KSImageNamedSwizzle)
 
@@ -40,7 +41,12 @@
                 }
             }
             
-            shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
+            for (NSString *nextClassAndMethod in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
+                if ([line hasSuffix:nextClassAndMethod]) {
+                    shouldAutoComplete = YES;
+                    break;
+                }
+            }
         } @catch (NSException *exception) {
             //I'd rather not crash if Xcode chokes on something
         }

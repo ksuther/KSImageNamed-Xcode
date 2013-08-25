@@ -75,18 +75,20 @@
                     }
                 }
                 
-                NSRange imageNamedRange = [itemString rangeOfString:@" imageNamed:"];
-                
-                if (imageNamedRange.location != NSNotFound) {
-                    atImageNamed = YES;
+                for (NSString *nextMethodDeclaration in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeMethodDeclaration]) {
+                    NSRange imageNamedRange = [itemString rangeOfString:nextMethodDeclaration];
                     
-                    //We might be past imageNamed, such as 'imageNamed:@"name"] draw<insertion point>'
-                    //For now just check if the insertion point is past the closing bracket. This won't work if an image has a bracket in the name and other edge cases.
-                    //It'd probably be cleaner to use the source model to determine this
-                    NSRange closeBracketRange = [itemString rangeOfString:@"]" options:0 range:NSMakeRange(imageNamedRange.location, [itemString length] - imageNamedRange.location)];
-                    
-                    if (closeBracketRange.location != NSNotFound) {
-                        atImageNamed = NO;
+                    if (imageNamedRange.location != NSNotFound) {
+                        atImageNamed = YES;
+                        
+                        //We might be past imageNamed, such as 'imageNamed:@"name"] draw<insertion point>'
+                        //For now just check if the insertion point is past the closing bracket. This won't work if an image has a bracket in the name and other edge cases.
+                        //It'd probably be cleaner to use the source model to determine this
+                        NSRange closeBracketRange = [itemString rangeOfString:@"]" options:0 range:NSMakeRange(imageNamedRange.location, [itemString length] - imageNamedRange.location)];
+                        
+                        if (closeBracketRange.location != NSNotFound) {
+                            atImageNamed = NO;
+                        }
                     }
                 }
             }
@@ -100,7 +102,7 @@
                 
                 NSString *previousItemString = [string substringWithRange:previousItemRange];
                 
-                if ([previousItemString isEqualToString:@"imageNamed"]) {
+                if ([[[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeMethodName] containsObject:previousItemString]) {
                     atImageNamed = YES;
                 }
             }
