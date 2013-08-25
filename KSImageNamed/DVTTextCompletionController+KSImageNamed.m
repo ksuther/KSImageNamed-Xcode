@@ -91,6 +91,8 @@
 {
     KSImageNamedPreviewWindow *imageWindow = [KSImageNamed sharedPlugin].imageWindow;
     
+    imageWindow.image = image;
+    
     if (!image) {
         [imageWindow orderOut:self];
     } else {
@@ -112,10 +114,6 @@
             [[NSApp keyWindow] addChildWindow:imageWindow ordered:NSWindowAbove];
         }
     }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        imageWindow.image = image;
-    });
 }
 
 @end
