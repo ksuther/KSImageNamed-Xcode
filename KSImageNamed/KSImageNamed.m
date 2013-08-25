@@ -176,27 +176,42 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
             //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
             NSString *imageName = [fileName stringByDeletingPathExtension];
             BOOL skip = NO;
+            BOOL is2x = NO;
+
             NSString *normalFileName = nil;
             
             if ([imageName hasSuffix:@"@2x"]) {
                 normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                is2x = YES;
             } else if ([imageName hasSuffix:@"@2x~ipad"]) {
                 //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
                 normalFileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                is2x = YES;
+            }
+            else
+            {
+                normalFileName = fileName;
             }
             
-            if (normalFileName) {
-                KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
-                
-                if (existingCompletionItem) {
-                    [existingCompletionItem setHas2x:YES];
-                    skip = YES;
+            KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
+            
+            if (existingCompletionItem)
+            {
+                if (is2x)
+                {
+                    existingCompletionItem.has2x = YES;
                 }
+                else
+                {
+                    existingCompletionItem.has1x = YES;
+                }
+                skip = YES;
             }
             
             if (!skip && [[nextResult fileDataTypePresumed] conformsToAnyIdentifierInSet:imageTypes]) {
                 KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileURL:[nextResult fileReferenceURL] includeExtension:includeExtension];
-                
+                imageCompletion.has2x = is2x;
+                imageCompletion.has1x = !is2x;
                 [completionItems addObject:imageCompletion];
                 [imageCompletionItems setObject:imageCompletion forKey:fileName];
             }
