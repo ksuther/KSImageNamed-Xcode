@@ -37,7 +37,7 @@
                 NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [stringToMatch length], [stringToMatch length])];
                 
                 if ([insertedString isEqualToString:stringToMatch]) {
-                    [[self textView] _replaceCellWithCellText:@""];
+                    [[self textView] insertText:@"" replacementRange:range];
                     [self _showCompletionsAtCursorLocationExplicitly:YES];
                 }
             }

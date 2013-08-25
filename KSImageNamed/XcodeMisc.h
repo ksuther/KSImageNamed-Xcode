@@ -73,7 +73,6 @@
 @interface DVTCompletingTextView : NSTextView
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)arg1;
 - (NSRange)realSelectedRange;
-- (void)_replaceCellWithCellText:(id)arg1;
 @end
 
 @interface DVTSourceTextView : DVTCompletingTextView
