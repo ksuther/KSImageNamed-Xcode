@@ -40,7 +40,18 @@
                 }
             }
             
-            shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
+//            shouldAutoComplete = [line hasSuffix:@"mage imageNamed:"];
+//            
+//            if (!shouldAutoComplete) {
+//                shouldAutoComplete = [line hasSuffix:@"rite spriteWithFile:"];
+//            }
+            for (NSString *tempString in CompletionList) {
+                shouldAutoComplete = [line hasSuffix:tempString];
+                if (shouldAutoComplete) {
+                    break;
+                }
+            }
+            
         } @catch (NSException *exception) {
             //I'd rather not crash if Xcode chokes on something
         }

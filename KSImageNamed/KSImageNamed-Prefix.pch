@@ -4,4 +4,9 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+
+#define CompletionList [NSArray arrayWithObjects: @"rite spriteWithFile:", @"mage imageNamed:",@"mage imageWithContentsOfFile:", nil]
+#define CompletionList2 [NSArray arrayWithObjects: @" spriteWithFile:", @" imageNamed:",@" imageWithContentsOfFile:", nil]
+#define CompletionList3 [NSArray arrayWithObjects: @"spriteWithFile", @"imageNamed",@"imageWithContentsOfFile:", nil]
+
 #endif

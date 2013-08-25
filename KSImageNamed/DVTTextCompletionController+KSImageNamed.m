@@ -30,17 +30,40 @@
     if (success) {
         @try {
             NSRange range = [[self textView] realSelectedRange];
-            NSString * const stringToMatch = @"mage imageNamed:";
+//            NSString * const stringToMatch = @"mage imageNamed:";
+//            NSString * const spriteStringToMatch = @"rite spriteWithFile:";
+//
+//            
+//            //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
+//            if (range.location > [stringToMatch length] || range.location > [spriteStringToMatch length]) {
+//                NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [stringToMatch length], [stringToMatch length])];
+//                
+//                if ([insertedString isEqualToString:stringToMatch]) {
+//                    [[self textView] _replaceCellWithCellText:@""];
+//                    [self _showCompletionsAtCursorLocationExplicitly:YES];
+//                }else{
+//                    NSString *spriteinsertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [spriteStringToMatch length], [spriteStringToMatch length])];
+//                    
+//                    if ([spriteinsertedString isEqualToString:spriteStringToMatch]) {
+//                        [[self textView] _replaceCellWithCellText:@""];
+//                        [self _showCompletionsAtCursorLocationExplicitly:YES];
+//                    }
+//                }
+//            }
             
-            //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
-            if (range.location > [stringToMatch length]) {
-                NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [stringToMatch length], [stringToMatch length])];
+            /*get from array*/
+        for (NSString *tempStr in CompletionList) {
+            if (range.location > [tempStr length] || range.location > [tempStr length]) {
+                NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [tempStr length], [tempStr length])];
                 
-                if ([insertedString isEqualToString:stringToMatch]) {
+                if ([insertedString isEqualToString:tempStr]) {
                     [[self textView] _replaceCellWithCellText:@""];
                     [self _showCompletionsAtCursorLocationExplicitly:YES];
+                    break;
                 }
             }
+        }
+            
         } @catch (NSException *exception) {
             //I'd rather not crash if Xcode chokes on something
         }
