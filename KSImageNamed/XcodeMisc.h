@@ -49,6 +49,7 @@
 @interface NSObject ()
 - (id)filesContaining:(id)arg1 anchorStart:(BOOL)arg2 anchorEnd:(BOOL)arg3 subsequence:(BOOL)arg4 ignoreCase:(BOOL)arg5 cancelWhen:(id)arg6;
 - (id)fileDataTypePresumed;
+- (BOOL)conformsTo:(id)arg1;
 - (BOOL)conformsToAnyIdentifierInSet:(id)arg1;
 - (id)databaseQueryProvider;
 - (id)codeCompletionsAtLocation:(id)arg1 withCurrentFileContentDictionary:(id)arg2 completionContext:(id *)arg3 sortedUsingBlock:(id)arg4;

@@ -13,7 +13,7 @@ Build the KSImageNamed target in the Xcode project and the plug-in will automati
 
 ## What does this work with?
 
-Developed and tested against Xcode 4.5.2 on 10.8. Also appears to work with Xcode 4.6.
+Developed and tested against Xcode 4.6.1 and Xcode 5 DP6.
 
 ## How do I include file extensions when autocompleting?
 
@@ -26,6 +26,8 @@ Ideas for people who might want to hack on this:
 
 1. Only include images that are in the current project. Currently all images in the workspace are shown.
 2. Show an image preview and dimensions when clicking on an imageNamed: string in the editor
+
+Note that this project is compiled with garbage collection supported, which means you must handle both garbage collection and reference counting. This means manual reference counting, not ARC!
 
 ## License
 

@@ -29,7 +29,8 @@
     
     if (success) {
         @try {
-            NSRange range = [[self textView] realSelectedRange];
+            //Xcode 4 uses realSelectedRange, Xcode 5 can use selectedRange
+            NSRange range = [[self textView] respondsToSelector:@selector(realSelectedRange)] ? [[self textView] realSelectedRange] : [[self textView] selectedRange];
             NSString * const stringToMatch = @"mage imageNamed:";
             
             //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete
@@ -73,7 +74,7 @@
             NSImage *image = nil;
             if (indexOfString != NSNotFound) {
                 KSImageNamedIndexCompletionItem *completionItem = imageCompletions[indexOfString];
-                image = [[NSImage alloc] initWithContentsOfURL:completionItem.fileURL];
+                image = [[[NSImage alloc] initWithContentsOfURL:completionItem.imageFileURL] autorelease];
             }
             
             [self showPreviewForImage:image];
@@ -95,7 +96,7 @@
     } else {
         NSRect imgRect = NSMakeRect(0.0, 0.0, image.size.width, image.size.height);
         
-        NSImageView *imageView = [[NSImageView alloc] initWithFrame:imgRect];
+        NSImageView *imageView = [[[NSImageView alloc] initWithFrame:imgRect] autorelease];
         imageView.image = image;
         
         id currentDVTTextCompletionSession = [self currentSession];

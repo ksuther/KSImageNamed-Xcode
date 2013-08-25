@@ -10,9 +10,10 @@
 #import <objc/runtime.h>
 
 @interface KSImageNamedIndexCompletionItem () {
-    NSString *_imageCompletionText;
     BOOL _imageIncludeExtension;
 }
+@property(nonatomic, strong) NSString *imageCompletionText;
+@property(nonatomic, assign, getter=isInAssetCatalog) BOOL inAssetCatalog;
 @end
 
 @implementation KSImageNamedIndexCompletionItem
@@ -21,11 +22,31 @@
 {
     if ( (self = [super init]) ) {
         [self setFileURL:fileURL];
+        [self setImageCompletionText:[self _imageNamedText]];
         
         _imageIncludeExtension = includeExtension;
-        _imageCompletionText = [self _imageNamedText];
     }
     return self;
+}
+
+- (id)initWithAssetFileURL:(NSURL *)fileURL
+{
+    if ( (self = [super init]) ) {
+        [self setFileURL:fileURL];
+        [self setImageCompletionText:[self _imageNamedText]];
+        [self setInAssetCatalog:YES];
+        
+        _imageIncludeExtension = NO;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [self setFileURL:nil];
+    [self setImageCompletionText:nil];
+    
+    [super dealloc];
 }
 
 - (void)_fillInTheRest
@@ -36,6 +57,39 @@
 - (long long)priority
 {
     return 9999;
+}
+
+- (NSURL *)imageFileURL
+{
+    NSURL *imageFileURL = nil;
+    
+    if ([self isInAssetCatalog]) {
+        //Pull the first image out of the imageset's Contents.json
+        NSURL *contentsURL = [[self fileURL] URLByAppendingPathComponent:@"Contents.json"];
+        NSData *contentsData = [NSData dataWithContentsOfURL:contentsURL];
+        
+        if (contentsData) {
+            NSDictionary *contentsJSON = [NSJSONSerialization JSONObjectWithData:contentsData options:0 error:NULL];
+            
+            if ([contentsJSON isKindOfClass:[NSDictionary class]]) {
+                NSArray *images = [contentsJSON objectForKey:@"images"];
+                
+                // Ignore idiom, scale, slicing for now
+                for (NSDictionary *nextImageDictionary in images) {
+                    NSString *filename = [nextImageDictionary objectForKey:@"filename"];
+                    
+                    if (filename) {
+                        imageFileURL = [[self fileURL] URLByAppendingPathComponent:filename];
+                        break;
+                    }
+                }
+            }
+        }
+    } else {
+        imageFileURL = [self fileURL];
+    }
+    
+    return imageFileURL;
 }
 
 - (NSString *)fileName
@@ -60,7 +114,7 @@
 
 - (NSString *)completionText
 {
-    return _imageCompletionText;
+    return [self imageCompletionText];
 }
 
 - (NSString *)displayType

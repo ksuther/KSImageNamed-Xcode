@@ -10,15 +10,16 @@
 #import "KSImageNamedIndexCompletionItem.h"
 #import "KSImageNamedPreviewWindow.h"
 #import "XcodeMisc.h"
+#import "MethodSwizzle.h"
 
 NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionInImageCompletion";
 
 @interface KSImageNamed () {
     NSTimer *_updateTimer;
-    KSImageNamedPreviewWindow *_imageWindow;
 }
 @property(nonatomic, strong) NSMutableDictionary *imageCompletions;
 @property(nonatomic, strong) NSMutableSet *indexesToUpdate;
+@property(nonatomic, strong) KSImageNamedPreviewWindow *imageWindow;
 @end
 
 @implementation KSImageNamed
@@ -27,8 +28,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 {
     if ([self shouldLoadPlugin]) {
         [self sharedPlugin];
-    } else if ([self isInXcode]) {
-        NSLog(@"Encountered unknown version of Xcode, KSImageNamed is not loading.");
     }
 }
 
@@ -43,18 +42,11 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     return sharedPlugin;
 }
 
-+ (BOOL)isInXcode
++ (BOOL)shouldLoadPlugin
 {
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     
     return bundleIdentifier && [bundleIdentifier caseInsensitiveCompare:@"com.apple.dt.Xcode"] == NSOrderedSame;
-}
-
-+ (BOOL)shouldLoadPlugin
-{
-    NSString *xcodeShortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
-    return [self isInXcode] && [xcodeShortVersion compare:@"5.0" options:NSNumericSearch] == NSOrderedAscending;
 }
 
 - (id)init
@@ -69,6 +61,10 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self setImageCompletions:nil];
+    [self setIndexesToUpdate:nil];
+    [self setImageWindow:nil];
     
     [super dealloc];
 }
@@ -117,6 +113,8 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     }
     
     [[self indexesToUpdate] removeAllObjects];
+    
+    _updateTimer = nil;
 }
 
 - (NSArray *)_rebuildCompletionsForIndex:(id)index
@@ -173,37 +171,73 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         NSString *fileName = [nextResult fileName];
         
         if (![imageCompletionItems objectForKey:fileName]) {
-            //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
-            NSString *imageName = [fileName stringByDeletingPathExtension];
-            BOOL skip = NO;
-            NSString *normalFileName = nil;
-            
-            if ([imageName hasSuffix:@"@2x"]) {
-                normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
-            } else if ([imageName hasSuffix:@"@2x~ipad"]) {
-                //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
-                normalFileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
-            }
-            
-            if (normalFileName) {
-                KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
+            if ([[nextResult fileDataTypePresumed] conformsTo:@"com.apple.dt.assetcatalog"]) {
+                //Iterate over asset catalog contents
+                NSArray *assetCatalogCompletions = [self _imageCompletionsForAssetCatalog:nextResult];
                 
-                if (existingCompletionItem) {
-                    [existingCompletionItem setHas2x:YES];
-                    skip = YES;
+                [completionItems addObjectsFromArray:assetCatalogCompletions];
+                
+                for (KSImageNamedIndexCompletionItem *nextImageCompletion in assetCatalogCompletions) {
+                    [imageCompletionItems setObject:nextImageCompletion forKey:[nextImageCompletion fileName]];
                 }
-            }
-            
-            if (!skip && [[nextResult fileDataTypePresumed] conformsToAnyIdentifierInSet:imageTypes]) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithFileURL:[nextResult fileReferenceURL] includeExtension:includeExtension];
+            } else {
+                //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
+                NSString *imageName = [fileName stringByDeletingPathExtension];
+                BOOL skip = NO;
+                NSString *normalFileName = nil;
                 
-                [completionItems addObject:imageCompletion];
-                [imageCompletionItems setObject:imageCompletion forKey:fileName];
+                if ([imageName hasSuffix:@"@2x"]) {
+                    normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                } else if ([imageName hasSuffix:@"@2x~ipad"]) {
+                    //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
+                    normalFileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                }
+                
+                if (normalFileName) {
+                    KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
+                    
+                    if (existingCompletionItem) {
+                        [existingCompletionItem setHas2x:YES];
+                        skip = YES;
+                    }
+                }
+                
+                if (!skip && [[nextResult fileDataTypePresumed] conformsToAnyIdentifierInSet:imageTypes]) {
+                    KSImageNamedIndexCompletionItem *imageCompletion = [[[KSImageNamedIndexCompletionItem alloc] initWithFileURL:[nextResult fileReferenceURL] includeExtension:includeExtension] autorelease];
+                    
+                    [completionItems addObject:imageCompletion];
+                    [imageCompletionItems setObject:imageCompletion forKey:fileName];
+                }
             }
         }
     }
     
     return completionItems;
+}
+
+//arg1 is a DVTFilePath
+- (NSArray *)_imageCompletionsForAssetCatalog:(id)filePath
+{
+    NSMutableArray *imageCompletions = [NSMutableArray array];
+    NSArray *properties = @[NSURLNameKey, NSURLIsDirectoryKey];
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[filePath fileURL] includingPropertiesForKeys:properties options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:nil];
+    
+    for (NSURL *nextURL in enumerator) {
+        NSString *fileName;
+        NSNumber *isDirectory;
+        
+        if ([nextURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL] && [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
+            if ([[fileName pathExtension] caseInsensitiveCompare:@"imageset"] == NSOrderedSame) {
+                KSImageNamedIndexCompletionItem *imageCompletion = [[[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL] autorelease];
+                
+                [imageCompletions addObject:imageCompletion];
+                
+                [enumerator skipDescendants];
+            }
+        }
+    }
+    
+    return imageCompletions;
 }
 
 @end
