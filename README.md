@@ -3,9 +3,9 @@
 
 ## What is this?
 
-Can't remember whether that image you just added to the project was called `button-separator-left` or `button-left-separator`? Now you don't have to, because this will autocomplete your `imageNamed:` calls like you'd expect. Just type in `[NSImage imageNamed:` or `[UIImage imageNamed:` and all the images in your project will conveniently appear in the autocomplete menu.
+Can't remember whether that image you just added to the project was called `button-separator-left` or `button-left-separator`? Now you don't have to, because this will autocomplete your `imageNamed:` calls like you'd expect. Just type in `[NSImage imageNamed:` or `[UIImage imageNamed:` and all the images in your project will conveniently appear in the autocomplete menu. You'll even get a handy preview of the image you're about to select.
 
-![Screenshot](https://raw.github.com/ksuther/KSImageNamed-Xcode/master/screenshot.png)
+![Screenshot](https://raw.github.com/ksuther/KSImageNamed-Xcode/master/screenshot.gif)
 
 ## How do I use it?
 
