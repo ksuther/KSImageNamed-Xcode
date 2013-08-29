@@ -39,8 +39,8 @@
 		3772077A16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IDEWorkspace+KSImageNamed.h"; sourceTree = "<group>"; };
 		3772077B16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IDEWorkspace+KSImageNamed.m"; sourceTree = "<group>"; };
 		377E049317C98A0A003665B1 /* Completions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Completions.plist; sourceTree = "<group>"; };
-		3791502716AB3B90005A124A /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
 		3791502916AB3B98005A124A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		3795759717CF1E4E00C1258C /* screenshot.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screenshot.gif; sourceTree = "<group>"; };
 		37A2B52B15FE927F00D9AE1E /* MethodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodSwizzle.h; sourceTree = "<group>"; };
 		37A2B52C15FE927F00D9AE1E /* MethodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodSwizzle.m; sourceTree = "<group>"; };
 		37B5873416AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionController+KSImageNamed.h"; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				3791502916AB3B98005A124A /* README.md */,
-				3791502716AB3B90005A124A /* screenshot.png */,
+				3795759717CF1E4E00C1258C /* screenshot.gif */,
 				37E5302515FE7DDB00753EB4 /* KSImageNamed */,
 				37E5302215FE7DDB00753EB4 /* Frameworks */,
 				37E5302115FE7DDB00753EB4 /* Products */,
