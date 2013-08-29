@@ -12,7 +12,6 @@
 @interface KSImageNamedIndexCompletionItem () {
     BOOL _imageIncludeExtension;
 }
-@property(nonatomic, strong) NSString *imageCompletionText;
 @property(nonatomic, assign, getter=isInAssetCatalog) BOOL inAssetCatalog;
 @end
 
@@ -22,7 +21,6 @@
 {
     if ( (self = [super init]) ) {
         [self setFileURL:fileURL];
-        [self setImageCompletionText:[self _imageNamedText]];
         
         _imageIncludeExtension = includeExtension;
     }
@@ -33,7 +31,6 @@
 {
     if ( (self = [super init]) ) {
         [self setFileURL:fileURL];
-        [self setImageCompletionText:[self _imageNamedText]];
         [self setInAssetCatalog:YES];
         
         _imageIncludeExtension = NO;
@@ -44,7 +41,6 @@
 - (void)dealloc
 {
     [self setFileURL:nil];
-    [self setImageCompletionText:nil];
     
     [super dealloc];
 }
@@ -114,7 +110,7 @@
 
 - (NSString *)completionText
 {
-    return [self imageCompletionText];
+    return [self _imageNamedText];
 }
 
 - (NSString *)displayType
