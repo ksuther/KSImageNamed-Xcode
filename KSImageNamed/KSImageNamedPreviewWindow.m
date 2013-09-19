@@ -22,10 +22,10 @@
 - (instancetype)init
 {
     NSRect frame = NSMakeRect(0.0, 0.0, 10.0, 50.0);
-    if (self = [super initWithContentRect:frame
+    if ( (self = [super initWithContentRect:frame
                                 styleMask:NSBorderlessWindowMask
                                   backing:NSBackingStoreBuffered
-                                    defer:NO]) {
+                                    defer:NO]) ) {
         self.hasShadow = YES;
         _frameTopRightPoint = NSMakePoint(10.0, 50.0);
 
@@ -55,7 +55,7 @@
         
         _imageView = [[NSImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 0.0, 0.0)];
         _imageView.wantsLayer = YES;
-        _imageView.layer.borderColor = CGColorCreateGenericGray(0.0, 0.3);
+        _imageView.layer.borderColor = [[NSColor colorWithCalibratedWhite:0.0 alpha:0.3] CGColor];
         _imageView.layer.borderWidth = 1.0;
         [_contentView addSubview:_imageView];
     }
