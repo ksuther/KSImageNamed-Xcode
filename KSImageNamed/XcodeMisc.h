@@ -101,6 +101,8 @@
 
 @interface DVTTextCompletionListWindowController : NSWindowController
 - (id)_selectedCompletionItem;
+- (void)showInfoPaneForCompletionItem:(id)arg1;
+- (void)_hideWindow;
 @end
 
 @interface IDEIndexCompletionStrategy : NSObject
