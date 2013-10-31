@@ -13,7 +13,7 @@ Build the KSImageNamed target in the Xcode project and the plug-in will automati
 
 ## What does this work with?
 
-Developed and tested against Xcode 4.6.1 and Xcode 5 DP6.
+Developed and tested against Xcode 5.0.1. Xcode 4.6 probably works, but I'm not longer testing against it.
 
 ## How do I include file extensions when autocompleting?
 

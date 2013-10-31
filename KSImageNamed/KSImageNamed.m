@@ -204,6 +204,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     }];
     
     BOOL includeExtension = [[NSUserDefaults standardUserDefaults] boolForKey:KSShowExtensionInImageCompletionDefaultKey];
+    BOOL encounteredAssetCatalog = NO;
     
     for (id nextResult in result) {
         NSString *fileName = [nextResult fileName];
@@ -218,6 +219,8 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 for (KSImageNamedIndexCompletionItem *nextImageCompletion in assetCatalogCompletions) {
                     [imageCompletionItems setObject:nextImageCompletion forKey:[nextImageCompletion fileName]];
                 }
+                
+                encounteredAssetCatalog = YES;
             } else {
                 //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 NSString *imageName = [fileName stringByDeletingPathExtension];
@@ -248,6 +251,12 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 }
             }
         }
+    }
+    
+    if (encounteredAssetCatalog) {
+        //Need to sort completionItems by fileName to ensure autocompletion in asset catalogs is handled correctly
+        //Autocomplete doesn't work correctly if the completion items aren't in alphabetical order
+        [completionItems sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"fileName" ascending:YES selector:@selector(caseInsensitiveCompare:)]]];
     }
     
     return completionItems;
