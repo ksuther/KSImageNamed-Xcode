@@ -22,5 +22,15 @@
 		<key>comment</key>
 		<string>cocos2d&apos;s CCSprite</string>
 	</dict>
+	<dict>
+		<key>classAndMethod</key>
+		<string>ode spriteNodeWithImageNamed:</string>
+		<key>methodDeclaration</key>
+		<string> spriteNodeWithImageNamed:</string>
+		<key>methodName</key>
+		<string>spriteNodeWithImageNamed</string>
+		<key>comment</key>
+		<string>SpriteKit&apos;s sprite node</string>
+	</dict>
 </array>
 </plist>
