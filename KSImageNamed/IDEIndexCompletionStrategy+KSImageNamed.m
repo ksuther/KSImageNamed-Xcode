@@ -107,9 +107,16 @@
                     previousItemRange.length -= NSMaxRange(previousItemRange) - selectedRange.location;
                 }
                 
+                //Enlarge previousItemRange to ensure we're at a method call and not a variable declaration or something else
+                //For example, previousItemRange could be hitting a variable declaration such as "NSImage *imageNamed = [" (issue #34)
+                if (previousItemRange.location > 0) {
+                    previousItemRange.location--;
+                    previousItemRange.length += 2;
+                }
+                
                 NSString *previousItemString = [string substringWithRange:previousItemRange];
                 
-                if ([[[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeMethodName] containsObject:previousItemString]) {
+                if ([[[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeMethodDeclaration] containsObject:previousItemString]) {
                     atImageNamed = YES;
                 }
             }
