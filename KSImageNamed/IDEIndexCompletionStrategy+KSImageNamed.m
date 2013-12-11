@@ -41,8 +41,7 @@
     DVTCompletingTextView *textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
     
     void(^buildImageCompletions)() = ^{
-        //Xcode 4 uses realSelectedRange, Xcode 5 can use selectedRange
-        NSRange selectedRange = [sourceTextView respondsToSelector:@selector(realSelectedRange)] ? [sourceTextView realSelectedRange] : [sourceTextView selectedRange];
+        NSRange selectedRange = [sourceTextView selectedRange];
         
         @try {
             NSString *string = [textStorage string];

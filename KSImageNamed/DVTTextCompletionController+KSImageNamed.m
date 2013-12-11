@@ -25,8 +25,7 @@
     
     if (success) {
         @try {
-            //Xcode 4 uses realSelectedRange, Xcode 5 can use selectedRange
-            NSRange range = [[self textView] respondsToSelector:@selector(realSelectedRange)] ? [[self textView] realSelectedRange] : [[self textView] selectedRange];
+            NSRange range = [[self textView] selectedRange];
             
             for (NSString *nextClassAndMethod in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
                 //If an autocomplete causes imageNamed: to get inserted, remove the token and immediately pop up autocomplete

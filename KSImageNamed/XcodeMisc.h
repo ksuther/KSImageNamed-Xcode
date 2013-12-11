@@ -61,7 +61,7 @@
 - (NSString *)workspaceName;
 
 - (id)symbolNameAtCharacterIndex:(unsigned long long)arg1 nameRanges:(id *)arg2; //DVTSourceTextStorage
-- (id)sourceModelItemAtCharacterIndex:(unsigned long long)arg1; //DVTSourceTextStorage in Xcode 4 and 5, DVTSourceLanguageSourceModelService protocol in Xcode 5.1
+- (id)sourceModelItemAtCharacterIndex:(unsigned long long)arg1; //DVTSourceTextStorage in Xcode 5, DVTSourceLanguageSourceModelService protocol in Xcode 5.1
 - (id)sourceModel; //DVTSourceTextStorage
 
 @property(readonly) id sourceModelService; // DVTSourceTextStorage
@@ -75,7 +75,6 @@
 
 @interface DVTCompletingTextView : NSTextView
 - (BOOL)shouldAutoCompleteAtLocation:(unsigned long long)arg1;
-- (NSRange)realSelectedRange;
 @end
 
 @interface DVTSourceTextView : DVTCompletingTextView
