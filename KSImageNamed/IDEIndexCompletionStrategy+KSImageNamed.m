@@ -46,7 +46,15 @@
         
         @try {
             NSString *string = [textStorage string];
-            id item = [textStorage sourceModelItemAtCharacterIndex:selectedRange.location];
+            id item;
+            
+            //Xcode 5.1 added sourceModelService and moved sourceModelItemAtCharacterIndex: into it
+            if ([textStorage respondsToSelector:@selector(sourceModelItemAtCharacterIndex:)]) {
+                item = [textStorage sourceModelItemAtCharacterIndex:selectedRange.location];
+            } else {
+                item = [[textStorage sourceModelService] sourceModelItemAtCharacterIndex:selectedRange.location];
+            }
+            
             id previousItem = [item previousItem];
             NSString *itemString = nil;
             BOOL atImageNamed = NO;

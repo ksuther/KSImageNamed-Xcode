@@ -61,8 +61,10 @@
 - (NSString *)workspaceName;
 
 - (id)symbolNameAtCharacterIndex:(unsigned long long)arg1 nameRanges:(id *)arg2; //DVTSourceTextStorage
-- (id)sourceModelItemAtCharacterIndex:(unsigned long long)arg1; //DVTSourceTextStorage
+- (id)sourceModelItemAtCharacterIndex:(unsigned long long)arg1; //DVTSourceTextStorage in Xcode 4 and 5, DVTSourceLanguageSourceModelService protocol in Xcode 5.1
 - (id)sourceModel; //DVTSourceTextStorage
+
+@property(readonly) id sourceModelService; // DVTSourceTextStorage
 
 - (id)stringConstantAtLocation:(unsigned long long)arg1; //DVTSourceModel
 
