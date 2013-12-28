@@ -32,5 +32,15 @@
 		<key>comment</key>
 		<string>SpriteKit&apos;s sprite node</string>
 	</dict>
+	<dict>
+		<key>classAndMethod</key>
+		<string>ure textureWithImageNamed:</string>
+		<key>methodDeclaration</key>
+		<string> textureWithImageNamed:</string>
+		<key>methodName</key>
+		<string>textureWithImageNamed</string>
+		<key>comment</key>
+		<string>SpriteKit&apos;s SKTexture</string>
+	</dict>
 </array>
 </plist>
