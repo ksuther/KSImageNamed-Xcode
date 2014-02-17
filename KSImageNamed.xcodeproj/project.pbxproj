@@ -179,7 +179,7 @@
 		37E5301715FE7DDB00753EB4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 37E5301A15FE7DDB00753EB4 /* Build configuration list for PBXProject "KSImageNamed" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -299,7 +299,6 @@
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSImageNamed/KSImageNamed-Prefix.pch";
 				INFOPLIST_FILE = "KSImageNamed/KSImageNamed-Info.plist";
@@ -319,7 +318,6 @@
 					"$(DEVELOPER_DIR)/../Frameworks",
 					"$(DEVELOPER_DIR)/../SharedFrameworks",
 				);
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSImageNamed/KSImageNamed-Prefix.pch";
 				INFOPLIST_FILE = "KSImageNamed/KSImageNamed-Info.plist";
