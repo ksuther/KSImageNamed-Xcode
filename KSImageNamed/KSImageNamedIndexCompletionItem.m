@@ -120,19 +120,16 @@
 
 - (NSString *)displayText
 {
-    NSString *displayFormat = nil;//[self has2x] ? @"%@ (%@, 2x)" : @"%@ (%@)";
-    if(self.has2x && self.has1x)
-    {
-        displayFormat = @"%@ (%@, 2x,combo)";
+    NSString *displayFormat = @"%@ (%@)";
+    
+    if (self.has1x && self.has2x) {
+        displayFormat = @"%@ (%@, 1x and 2x)";
+    } else if (self.has1x) {
+        displayFormat = @"%@ (%@, 1x only)";
+    } else if (self.has2x) {
+        displayFormat = @"%@ (%@, 2x only)";
     }
-    else if(self.has2x)
-    {
-        displayFormat = @"%@ (%@, 2x,only)";
-    }
-    else if(self.has1x)
-    {
-        displayFormat = @"%@ (%@)";
-    }
+    
     return [NSString stringWithFormat:displayFormat, [self _imageNamedText], [[self fileURL] pathExtension]];
 }
 

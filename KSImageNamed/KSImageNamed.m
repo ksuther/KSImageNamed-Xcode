@@ -225,10 +225,9 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 NSString *imageName = [fileName stringByDeletingPathExtension];
+                NSString *normalFileName;
                 BOOL skip = NO;
                 BOOL is2x = NO;
-    
-                NSString *normalFileName = nil;
                 
                 if ([imageName hasSuffix:@"@2x"]) {
                     normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
@@ -237,22 +236,16 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                     //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
                     normalFileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
                     is2x = YES;
-                }
-                else
-                {
+                } else {
                     normalFileName = fileName;
                 }
                 
                 KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
                 
-                if (existingCompletionItem)
-                {
-                    if (is2x)
-                    {
+                if (existingCompletionItem) {
+                    if (is2x) {
                         existingCompletionItem.has2x = YES;
-                    }
-                    else
-                    {
+                    } else {
                         existingCompletionItem.has1x = YES;
                     }
                     skip = YES;
