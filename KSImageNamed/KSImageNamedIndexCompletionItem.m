@@ -120,7 +120,15 @@
 
 - (NSString *)displayText
 {
-    NSString *displayFormat = [self has2x] ? @"%@ (%@, 2x)" : @"%@ (%@)";
+    NSString *displayFormat = @"%@ (%@)";
+    
+    if (self.has1x && self.has2x) {
+        displayFormat = @"%@ (%@, 1x and 2x)";
+    } else if (self.has1x) {
+        displayFormat = @"%@ (%@, 1x only)";
+    } else if (self.has2x) {
+        displayFormat = @"%@ (%@, 2x only)";
+    }
     
     return [NSString stringWithFormat:displayFormat, [self _imageNamedText], [[self fileURL] pathExtension]];
 }
@@ -128,7 +136,14 @@
 - (NSString *)_fileName
 {
     NSString *fileName = [[self fileURL] lastPathComponent];
-    
+    NSString *imageName = [fileName stringByDeletingPathExtension];
+
+    if ([imageName hasSuffix:@"@2x"]) {
+        fileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+    } else if ([imageName hasSuffix:@"@2x~ipad"]) {
+        //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)
+        fileName = [[[imageName substringToIndex:[imageName length] - 8] stringByAppendingString:@"~ipad"] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+    }
     if (!_imageIncludeExtension) {
         fileName = [fileName stringByDeletingPathExtension];
     }
