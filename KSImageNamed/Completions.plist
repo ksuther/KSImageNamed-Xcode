@@ -24,6 +24,16 @@
 	</dict>
 	<dict>
 		<key>classAndMethod</key>
+		<string>priteFrame frameWithImageNamed:</string>
+		<key>methodDeclaration</key>
+		<string> frameWithImageNamed:</string>
+		<key>methodName</key>
+		<string>frameWithImageNamed</string>
+		<key>comment</key>
+		<string>cocos2d&apos;s CCSpriteFrame</string>
+	</dict>
+	<dict>
+		<key>classAndMethod</key>
 		<string>ode spriteNodeWithImageNamed:</string>
 		<key>methodDeclaration</key>
 		<string> spriteNodeWithImageNamed:</string>
