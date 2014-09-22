@@ -14,9 +14,15 @@
 
 + (void)load
 {
+    // Xcode 5 completion method
     MethodSwizzle(self,
                   @selector(completionItemsForDocumentLocation:context:areDefinitive:),
                   @selector(swizzle_completionItemsForDocumentLocation:context:areDefinitive:));
+    
+    // Xcode 6 completion method
+    MethodSwizzle(self,
+                  @selector(completionItemsForDocumentLocation:context:highlyLikelyCompletionItems:areDefinitive:),
+                  @selector(swizzle_completionItemsForDocumentLocation:context:highlyLikelyCompletionItems:areDefinitive:));
 }
 
 /*
@@ -36,10 +42,28 @@
 - (id)swizzle_completionItemsForDocumentLocation:(id)arg1 context:(id)arg2 areDefinitive:(char *)arg3
 {
     id items = [self swizzle_completionItemsForDocumentLocation:arg1 context:arg2 areDefinitive:arg3];
-    
     id sourceTextView = [arg2 objectForKey:@"DVTTextCompletionContextTextView"];
     DVTCompletingTextView *textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
     
+    [self ksimagenamed_checkForImageCompletionItems:items sourceTextView:sourceTextView textStorage:textStorage];
+    
+    return items;
+}
+
+- (id)swizzle_completionItemsForDocumentLocation:(id)arg1 context:(id)arg2 highlyLikelyCompletionItems:(id *)arg3 areDefinitive:(char *)arg4
+{
+    id items = [self swizzle_completionItemsForDocumentLocation:arg1 context:arg2 highlyLikelyCompletionItems:arg3 areDefinitive:arg4];
+    id sourceTextView = [arg2 objectForKey:@"DVTTextCompletionContextTextView"];
+    DVTCompletingTextView *textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
+    
+    [self ksimagenamed_checkForImageCompletionItems:items sourceTextView:sourceTextView textStorage:textStorage];
+    
+    return items;
+}
+
+// Returns void because this modifies items in place
+- (void)ksimagenamed_checkForImageCompletionItems:(id)items sourceTextView:(id)sourceTextView textStorage:(id)textStorage
+{
     void(^buildImageCompletions)() = ^{
         NSRange selectedRange = [sourceTextView selectedRange];
         
@@ -143,8 +167,6 @@
     } else {
         dispatch_sync(dispatch_get_main_queue(), buildImageCompletions);
     }
-    
-    return items;
 }
 
 @end
