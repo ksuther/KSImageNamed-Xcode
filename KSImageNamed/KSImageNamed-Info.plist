@@ -40,14 +40,6 @@
 	</dict>
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012-2013 Kent Sutherland</string>
-	<key>XCGCReady</key>
-	<true/>
-	<key>XCPluginHasUI</key>
-	<false/>
-	<key>XC4Compatible</key>
-	<true/>
 	<key>DVTPlugInCompatibilityUUIDs</key>
 	<array>
 		<string>FEC992CC-CA4A-4CFD-8881-77300FCB848A</string>
@@ -59,6 +51,15 @@
 		<string>C4A681B0-4A26-480E-93EC-1218098B9AA0</string>
 		<string>A16FF353-8441-459E-A50C-B071F53F51B7</string>
 		<string>9F75337B-21B4-4ADC-B558-F9CADF7073A7</string>
+		<string>E969541F-E6F9-4D25-8158-72DC3545A6C6</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2012-2013 Kent Sutherland</string>
+	<key>XC4Compatible</key>
+	<true/>
+	<key>XCGCReady</key>
+	<true/>
+	<key>XCPluginHasUI</key>
+	<false/>
 </dict>
 </plist>
