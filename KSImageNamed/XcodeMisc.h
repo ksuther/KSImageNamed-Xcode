@@ -69,6 +69,7 @@
 - (id)stringConstantAtLocation:(unsigned long long)arg1; //DVTSourceModel
 
 - (id)previousItem; //DVTSourceModelItem
+- (id)nextItem;
 
 - (id)_listWindowController; //DVTTextCompletionSession
 @end

@@ -122,12 +122,20 @@
 {
     NSString *displayFormat = @"%@ (%@)";
     
-    if (self.has1x && self.has2x) {
+    if (self.has1x && self.has2x && self.has3x) {
+        displayFormat = @"%@ (%@, 1x and 2x and 3x)";
+    }if (self.has2x && self.has3x) {
+        displayFormat = @"%@ (%@, 2x and 3x)";
+    }if (self.has1x && self.has3x) {
+        displayFormat = @"%@ (%@, 1x and 3x)";
+    }else if (self.has1x && self.has2x) {
         displayFormat = @"%@ (%@, 1x and 2x)";
     } else if (self.has1x) {
         displayFormat = @"%@ (%@, 1x only)";
     } else if (self.has2x) {
         displayFormat = @"%@ (%@, 2x only)";
+    }else if (self.has3x){
+        displayFormat = @"%@ (%@, 3x only)";
     }
     
     return [NSString stringWithFormat:displayFormat, [self _imageNamedText], [[self fileURL] pathExtension]];
@@ -138,7 +146,7 @@
     NSString *fileName = [[self fileURL] lastPathComponent];
     NSString *imageName = [fileName stringByDeletingPathExtension];
 
-    if ([imageName hasSuffix:@"@2x"]) {
+    if ([imageName hasSuffix:@"@2x"] || [imageName hasSuffix:@"@3x"]) {
         fileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
     } else if ([imageName hasSuffix:@"@2x~ipad"]) {
         //2x iPad images need to be handled separately since (image~ipad and image@2x~ipad are valid pairs)

@@ -228,8 +228,12 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 NSString *normalFileName;
                 BOOL skip = NO;
                 BOOL is2x = NO;
+                BOOL is3x = NO;
                 
-                if ([imageName hasSuffix:@"@2x"]) {
+                if ([imageName hasSuffix:@"@3x"]) {
+                    normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
+                    is3x = YES;
+                }else if ([imageName hasSuffix:@"@2x"]) {
                     normalFileName = [[imageName substringToIndex:[imageName length] - 3] stringByAppendingFormat:@".%@", [fileName pathExtension]];
                     is2x = YES;
                 } else if ([imageName hasSuffix:@"@2x~ipad"]) {
@@ -243,7 +247,9 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 KSImageNamedIndexCompletionItem *existingCompletionItem = [imageCompletionItems objectForKey:normalFileName];
                 
                 if (existingCompletionItem) {
-                    if (is2x) {
+                    if (is3x) {
+                        existingCompletionItem.has2x = YES;
+                    }else if (is2x) {
                         existingCompletionItem.has2x = YES;
                     } else {
                         existingCompletionItem.has1x = YES;

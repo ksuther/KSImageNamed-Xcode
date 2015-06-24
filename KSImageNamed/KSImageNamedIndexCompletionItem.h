@@ -101,6 +101,7 @@
 @property(nonatomic, strong, readonly) NSString *fileName;
 @property(nonatomic, assign) BOOL has1x;
 @property(nonatomic, assign) BOOL has2x;
+@property(nonatomic, assign) BOOL has3x;
 @property(nonatomic, assign, getter=isInAssetCatalog, readonly) BOOL inAssetCatalog;
 
 - (id)initWithFileURL:(NSURL *)fileURL includeExtension:(BOOL)includeExtension;
