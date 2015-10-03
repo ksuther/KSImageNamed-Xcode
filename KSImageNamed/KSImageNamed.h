@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, KSImageNamedCompletionStringType) {
 
 - (void)indexNeedsUpdate:(id)index; //IDEIndex
 - (void)removeImageCompletionsForIndex:(id)index; //IDEIndex
-- (NSArray *)imageCompletionsForIndex:(id)index; //IDEIndex
+- (NSArray *)imageCompletionsForIndex:(id)index language:(id)language; //IDEIndex
 
 - (NSSet *)completionStringsForType:(KSImageNamedCompletionStringType)type;
 

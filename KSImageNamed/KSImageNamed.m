@@ -95,12 +95,18 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     }
 }
 
-- (NSArray *)imageCompletionsForIndex:(id)index
+- (NSArray *)imageCompletionsForIndex:(id)index language:(id)language
 {
     NSArray *completions = [[self imageCompletions] objectForKey:[index workspaceName]];
     
     if (!completions) {
         completions = [self _rebuildCompletionsForIndex:index];
+    }
+
+    BOOL forSwift = [[language identifier] isEqualToString:@"Xcode.SourceCodeLanguage.Swift"];
+
+    for (KSImageNamedIndexCompletionItem *nextCompletionItem in completions) {
+        [nextCompletionItem setForSwift:forSwift];
     }
     
     return completions;

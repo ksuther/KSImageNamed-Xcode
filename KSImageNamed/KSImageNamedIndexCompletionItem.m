@@ -153,7 +153,11 @@
 
 - (NSString *)_imageNamedText
 {
-    return [NSString stringWithFormat:@"@\"%@\"", [self _fileName]];
+    if ([self forSwift]) {
+        return [NSString stringWithFormat:@"\"%@\"", [self _fileName]];
+    } else {
+        return [NSString stringWithFormat:@"@\"%@\"", [self _fileName]];
+    }
 }
 
 @end
