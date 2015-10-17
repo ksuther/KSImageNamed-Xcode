@@ -33,7 +33,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 
 + (instancetype)sharedPlugin
 {
-    static id sharedPlugin = nil;
+    static id sharedPlugin;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedPlugin = [[self alloc] init];
@@ -129,7 +129,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         }
     });
     
-    NSSet *completionStrings = nil;
+    NSSet *completionStrings;
     
     if (type == KSImageNamedCompletionStringTypeClassAndMethod) {
         completionStrings = classAndMethodCompletionStrings;
@@ -158,7 +158,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (NSArray *)_rebuildCompletionsForIndex:(id)index
 {
     NSString *workspaceName = [index workspaceName];
-    NSArray *completions = nil;
+    NSArray *completions;
     
     if (workspaceName) {
         if ([[self imageCompletions] objectForKey:workspaceName]) {

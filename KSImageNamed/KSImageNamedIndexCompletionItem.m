@@ -50,7 +50,7 @@
 
 - (NSURL *)imageFileURL
 {
-    NSURL *imageFileURL = nil;
+    NSURL *imageFileURL;
     
     if ([self isInAssetCatalog]) {
         //Pull the first image out of the imageset's Contents.json

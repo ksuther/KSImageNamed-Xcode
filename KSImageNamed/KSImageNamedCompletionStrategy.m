@@ -14,7 +14,7 @@
 
 - (id)completionItemsForDocumentLocation:(DVTTextDocumentLocation *)arg1 context:(NSDictionary *)arg2 highlyLikelyCompletionItems:(id *)arg3 areDefinitive:(char *)arg4
 {
-    NSArray *completions = nil;
+    NSArray *completions;
     id language = [arg2 objectForKey:@"DVTTextCompletionContextSourceCodeLanguage"];
 
     @try {
@@ -38,7 +38,7 @@
             id item = [[textStorage sourceModel] enclosingItemAtLocation:selectedRange.location];
             
             id previousItem = [item previousItem];
-            NSString *itemString = nil;
+            NSString *itemString;
             
             if (item) {
                 NSRange itemRange = [item range];
