@@ -223,7 +223,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 encounteredAssetCatalog = YES;
             } else {
                 //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
-                //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 NSString *imageName = [fileName stringByDeletingPathExtension];
                 NSString *normalFileName;
                 BOOL skip = NO;
