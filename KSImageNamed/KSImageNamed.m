@@ -61,12 +61,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [self setImageCompletions:nil];
-    [self setIndexesToUpdate:nil];
-    [self setImageWindow:nil];
-    
-    [super dealloc];
 }
 
 - (KSImageNamedPreviewWindow *)imageWindow
@@ -290,7 +284,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         
         if ([nextURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL] && [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
             if ([[fileName pathExtension] caseInsensitiveCompare:@"imageset"] == NSOrderedSame) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL] autorelease];
+                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL];
                 
                 [imageCompletions addObject:imageCompletion];
                 

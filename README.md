@@ -26,7 +26,6 @@ Ideas for people who might want to hack on this:
 
 1. Only include images that are in the current project. Currently all images in the workspace are shown.
 2. Show an image preview and dimensions when clicking on an imageNamed: string in the editor
-3. Switch to ARC since garbage collection support has been dropped
 
 ## License
 

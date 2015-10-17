@@ -105,8 +105,8 @@
         }
 
         if (atImageNamed) {
-            id workspace = [arg2 objectForKey:@"IDETextCompletionContextWorkspaceKey"];
-            id index = [workspace performSelector:@selector(index)];
+            IDEWorkspace *workspace = [arg2 objectForKey:@"IDETextCompletionContextWorkspaceKey"];
+            IDEIndex *index = [workspace index];
 
             completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index language:language];
 

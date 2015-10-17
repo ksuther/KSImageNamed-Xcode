@@ -38,13 +38,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [self setFileURL:nil];
-    
-    [super dealloc];
-}
-
 - (void)_fillInTheRest
 {
     
