@@ -285,8 +285,11 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         if ([nextURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL] && [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
             if ([[fileName pathExtension] caseInsensitiveCompare:@"imageset"] == NSOrderedSame) {
                 KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL];
-                
-                [imageCompletions addObject:imageCompletion];
+
+                if ([imageCompletion imageFileURL]) {
+                    // Only add the completion if there's an image in the set
+                    [imageCompletions addObject:imageCompletion];
+                }
                 
                 [enumerator skipDescendants];
             }
