@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F4ED06816ECBE7500250F46 /* KSImageNamedPreviewWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4ED06716ECBE7500250F46 /* KSImageNamedPreviewWindow.m */; };
-		372424AC1BC0413000C55103 /* KSImageNamed.xcplugindata in Resources */ = {isa = PBXBuildFile; fileRef = 372424AB1BC0413000C55103 /* KSImageNamed.xcplugindata */; settings = {ASSET_TAGS = (); }; };
+		372424AC1BC0413000C55103 /* KSImageNamed.xcplugindata in Resources */ = {isa = PBXBuildFile; fileRef = 372424AB1BC0413000C55103 /* KSImageNamed.xcplugindata */; };
 		3727E3B516AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */; };
 		37642FEA16B0C754002CC70F /* IDEIndex+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642FE916B0C754002CC70F /* IDEIndex+KSImageNamed.m */; };
 		3772077C16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 3772077B16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m */; };
@@ -24,7 +24,7 @@
 		37E5303315FE7E6300753EB4 /* KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E5303215FE7E6300753EB4 /* KSImageNamed.m */; };
 		37E5303515FE7F4200753EB4 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E5303415FE7F4200753EB4 /* AppKit.framework */; };
 		37E5303715FE7F4600753EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E5303615FE7F4600753EB4 /* Foundation.framework */; };
-		37FD092E1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FD092D1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m */; settings = {ASSET_TAGS = (); }; };
+		37FD092E1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FD092D1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m */; };
 		586F70C51818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 586F70C41818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m */; };
 /* End PBXBuildFile section */
 
