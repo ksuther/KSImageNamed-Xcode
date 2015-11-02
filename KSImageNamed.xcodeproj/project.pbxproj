@@ -25,6 +25,7 @@
 		37E5303515FE7F4200753EB4 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E5303415FE7F4200753EB4 /* AppKit.framework */; };
 		37E5303715FE7F4600753EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E5303615FE7F4600753EB4 /* Foundation.framework */; };
 		37FD092E1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FD092D1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m */; };
+		37FE67221BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FE67211BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.m */; };
 		586F70C51818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 586F70C41818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		37E5303615FE7F4600753EB4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37FD092C1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSImageNamedCompletionStrategy.h; sourceTree = "<group>"; };
 		37FD092D1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSImageNamedCompletionStrategy.m; sourceTree = "<group>"; };
+		37FE67201BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionSession+KSImageNamed.h"; sourceTree = "<group>"; };
+		37FE67211BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextCompletionSession+KSImageNamed.m"; sourceTree = "<group>"; };
 		586F70C31818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionListWindowController+KSImageNamed.h"; sourceTree = "<group>"; };
 		586F70C41818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextCompletionListWindowController+KSImageNamed.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,6 +137,8 @@
 				3727E3B416AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m */,
 				37B5873416AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.h */,
 				37B5873516AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m */,
+				37FE67201BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.h */,
+				37FE67211BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.m */,
 				586F70C31818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.h */,
 				586F70C41818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m */,
 				37A2B52B15FE927F00D9AE1E /* MethodSwizzle.h */,
@@ -224,6 +229,7 @@
 				37CEBA7815FE96F40090E015 /* KSImageNamedIndexCompletionItem.m in Sources */,
 				37FD092E1BC078FD00C57E2D /* KSImageNamedCompletionStrategy.m in Sources */,
 				586F70C51818C1C900A91B84 /* DVTTextCompletionListWindowController+KSImageNamed.m in Sources */,
+				37FE67221BE69ACB0010B371 /* DVTTextCompletionSession+KSImageNamed.m in Sources */,
 				3727E3B516AB350F007DACD3 /* DVTSourceTextView+KSImageNamed.m in Sources */,
 				37B5873616AF5BD500B4787D /* DVTTextCompletionController+KSImageNamed.m in Sources */,
 				3772077C16AFD84B005666C3 /* IDEWorkspace+KSImageNamed.m in Sources */,

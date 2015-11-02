@@ -82,11 +82,13 @@
 
 
 @interface DVTTextCompletionSession : NSObject
-@property(nonatomic) long long selectedCompletionIndex;
+@property(nonatomic) NSInteger selectedCompletionIndex;
 @property(retain) NSArray *filteredCompletionsAlpha;
 @property(retain) NSArray *allCompletions;
+@property(readonly) DVTCompletingTextView *textView;
 
 - (BOOL)shouldAutoSuggestForTextChange;
+- (NSRange)replacementRangeForSuggestedRange:(NSRange)arg1;
 @end
 
 @interface DVTTextCompletionController : NSObject
