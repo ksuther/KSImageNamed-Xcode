@@ -106,27 +106,31 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     return completions;
 }
 
-- (NSSet *)completionStringsForType:(KSImageNamedCompletionStringType)type
+- (NSSet<NSString *> *)completionStringsForType:(KSImageNamedCompletionStringType)type
 {
     //Pulls completions out of Completions.plist and creates arrays so the rest of the plugin can do lookups to see if it should be autocompleting a particular method
     //The three different strings are needed because this plugin does raw string matching rather than doing anything fancy like looking at the AST
-    static NSMutableSet *classAndMethodCompletionStrings;
-    static NSMutableSet *methodDeclarationCompletionStrings;
-    static NSMutableSet *methodNameCompletionStrings;
+    static NSSet<NSString *> *classAndMethodCompletionStrings;
+    static NSSet<NSString *> *methodDeclarationCompletionStrings;
+    static NSSet<NSString *> *methodNameCompletionStrings;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURL *completionsURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"Completions" withExtension:@"plist"];
         NSArray *completionStrings = [NSArray arrayWithContentsOfURL:completionsURL];
         
-        classAndMethodCompletionStrings = [[NSMutableSet alloc] init];
-        methodDeclarationCompletionStrings = [[NSMutableSet alloc] init];
-        methodNameCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableClassAndMethodCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableMethodDeclarationCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableMethodNameCompletionStrings = [[NSMutableSet alloc] init];
         
         for (NSDictionary *nextCompletionDictionary in completionStrings) {
-            [classAndMethodCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"classAndMethod"]];
-            [methodDeclarationCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodDeclaration"]];
-            [methodNameCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodName"]];
+            [mutableClassAndMethodCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"classAndMethod"]];
+            [mutableMethodDeclarationCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodDeclaration"]];
+            [mutableMethodNameCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodName"]];
         }
+
+        classAndMethodCompletionStrings = [mutableClassAndMethodCompletionStrings copy];
+        methodDeclarationCompletionStrings = [mutableMethodDeclarationCompletionStrings copy];
+        methodNameCompletionStrings = [mutableMethodNameCompletionStrings copy];
     });
     
     NSSet *completionStrings;
