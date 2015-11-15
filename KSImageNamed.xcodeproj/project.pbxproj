@@ -187,6 +187,7 @@
 		37E5301715FE7DDB00753EB4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = KS;
 				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 37E5301A15FE7DDB00753EB4 /* Build configuration list for PBXProject "KSImageNamed" */;
