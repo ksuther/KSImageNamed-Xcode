@@ -33,7 +33,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 
 + (instancetype)sharedPlugin
 {
-    static id sharedPlugin = nil;
+    static id sharedPlugin;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedPlugin = [[self alloc] init];
@@ -61,12 +61,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [self setImageCompletions:nil];
-    [self setIndexesToUpdate:nil];
-    [self setImageWindow:nil];
-    
-    [super dealloc];
 }
 
 - (KSImageNamedPreviewWindow *)imageWindow
@@ -95,41 +89,51 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     }
 }
 
-- (NSArray *)imageCompletionsForIndex:(id)index
+- (NSArray *)imageCompletionsForIndex:(id)index language:(id)language
 {
     NSArray *completions = [[self imageCompletions] objectForKey:[index workspaceName]];
     
     if (!completions) {
         completions = [self _rebuildCompletionsForIndex:index];
     }
+
+    BOOL forSwift = [[language identifier] isEqualToString:@"Xcode.SourceCodeLanguage.Swift"];
+
+    for (KSImageNamedIndexCompletionItem *nextCompletionItem in completions) {
+        [nextCompletionItem setForSwift:forSwift];
+    }
     
     return completions;
 }
 
-- (NSSet *)completionStringsForType:(KSImageNamedCompletionStringType)type
+- (NSSet<NSString *> *)completionStringsForType:(KSImageNamedCompletionStringType)type
 {
     //Pulls completions out of Completions.plist and creates arrays so the rest of the plugin can do lookups to see if it should be autocompleting a particular method
     //The three different strings are needed because this plugin does raw string matching rather than doing anything fancy like looking at the AST
-    static NSMutableSet *classAndMethodCompletionStrings;
-    static NSMutableSet *methodDeclarationCompletionStrings;
-    static NSMutableSet *methodNameCompletionStrings;
+    static NSSet<NSString *> *classAndMethodCompletionStrings;
+    static NSSet<NSString *> *methodDeclarationCompletionStrings;
+    static NSSet<NSString *> *methodNameCompletionStrings;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURL *completionsURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"Completions" withExtension:@"plist"];
         NSArray *completionStrings = [NSArray arrayWithContentsOfURL:completionsURL];
         
-        classAndMethodCompletionStrings = [[NSMutableSet alloc] init];
-        methodDeclarationCompletionStrings = [[NSMutableSet alloc] init];
-        methodNameCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableClassAndMethodCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableMethodDeclarationCompletionStrings = [[NSMutableSet alloc] init];
+        NSMutableSet<NSString *> *mutableMethodNameCompletionStrings = [[NSMutableSet alloc] init];
         
         for (NSDictionary *nextCompletionDictionary in completionStrings) {
-            [classAndMethodCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"classAndMethod"]];
-            [methodDeclarationCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodDeclaration"]];
-            [methodNameCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodName"]];
+            [mutableClassAndMethodCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"classAndMethod"]];
+            [mutableMethodDeclarationCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodDeclaration"]];
+            [mutableMethodNameCompletionStrings addObject:[nextCompletionDictionary objectForKey:@"methodName"]];
         }
+
+        classAndMethodCompletionStrings = [mutableClassAndMethodCompletionStrings copy];
+        methodDeclarationCompletionStrings = [mutableMethodDeclarationCompletionStrings copy];
+        methodNameCompletionStrings = [mutableMethodNameCompletionStrings copy];
     });
     
-    NSSet *completionStrings = nil;
+    NSSet *completionStrings;
     
     if (type == KSImageNamedCompletionStringTypeClassAndMethod) {
         completionStrings = classAndMethodCompletionStrings;
@@ -158,7 +162,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 - (NSArray *)_rebuildCompletionsForIndex:(id)index
 {
     NSString *workspaceName = [index workspaceName];
-    NSArray *completions = nil;
+    NSArray *completions;
     
     if (workspaceName) {
         if ([[self imageCompletions] objectForKey:workspaceName]) {
@@ -222,7 +226,6 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 
                 encounteredAssetCatalog = YES;
             } else {
-                //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 //Is this a 2x image? Maybe we already added a 1x version that we can mark as having a 2x version
                 NSString *imageName = [fileName stringByDeletingPathExtension];
                 NSString *normalFileName;
@@ -290,9 +293,12 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         
         if ([nextURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL] && [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
             if ([[fileName pathExtension] caseInsensitiveCompare:@"imageset"] == NSOrderedSame) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL] autorelease];
-                
-                [imageCompletions addObject:imageCompletion];
+                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL];
+
+                if ([imageCompletion imageFileURL]) {
+                    // Only add the completion if there's an image in the set
+                    [imageCompletions addObject:imageCompletion];
+                }
                 
                 [enumerator skipDescendants];
             }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>version</key>
+	<dict>
+		<key>compiler-build</key>
+		<integer>8201</integer>
+		<key>file-format</key>
+		<integer>1</integer>
+	</dict>
+	<key>plug-in</key>
+	<dict>
+		<key>extensions</key>
+		<dict>
+			<key>KSImageNamed.CompletionStrategy.ImageNamed</key>
+			<dict>
+				<key>strategyClass</key>
+				<string>KSImageNamedCompletionStrategy</string>
+				<key>id</key>
+				<string>KSImageNamed.CompletionStrategy.ImageNamed</string>
+				<key>supportedLanguage</key>
+				<array>
+					<dict>
+						<key>languageID</key>
+						<string>Xcode.SourceCodeLanguage.Objective-C</string>
+					</dict>
+					<dict>
+						<key>languageID</key>
+						<string>Xcode.SourceCodeLanguage.Swift</string>
+					</dict>
+				</array>
+				<key>priority</key>
+				<string>10</string>
+				<key>point</key>
+				<string>Xcode.DVTKit.TextCompletionStrategy</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

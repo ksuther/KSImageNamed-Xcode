@@ -5,15 +5,15 @@
 
 Can't remember whether that image you just added to the project was called `button-separator-left` or `button-left-separator`? Now you don't have to, because this will autocomplete your `imageNamed:` calls like you'd expect. Just type in `[NSImage imageNamed:` or `[UIImage imageNamed:` and all the images in your project will conveniently appear in the autocomplete menu. You'll even get a handy preview of the image you're about to select.
 
+Developed and tested against Xcode 7. Objective-C and Swift are both supported.
+
 ![Screenshot](https://raw.github.com/ksuther/KSImageNamed-Xcode/master/screenshot.gif)
 
 ## How do I use it?
 
-Build the KSImageNamed target in the Xcode project and the plug-in will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`. Relaunch Xcode and `imageNamed:` will magically start autocompleting your images.
+Build the KSImageNamed target in the Xcode project and the plug-in will automatically be installed in `~/Library/Developer/Xcode/Plug-ins`. Relaunch Xcode and `imageNamed:` will magically start autocompleting your images.
 
-## What does this work with?
-
-Developed and tested against Xcode 6 and 6.1. It will probably work with Xcode 5.1.1 also.
+**Important**: Old versions of KSImageNamed were installed in `~/Library/Developer/Application Support/Developer/Shared/Xcode/Plug-ins`. Make sure to remove `KSImageNamed.xcplugin` from there before installing the new one.
 
 ## How do I include file extensions when autocompleting?
 
@@ -26,7 +26,6 @@ Ideas for people who might want to hack on this:
 
 1. Only include images that are in the current project. Currently all images in the workspace are shown.
 2. Show an image preview and dimensions when clicking on an imageNamed: string in the editor
-3. Switch to ARC since garbage collection support has been dropped
 
 ## License
 

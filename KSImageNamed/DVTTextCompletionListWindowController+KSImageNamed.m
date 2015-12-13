@@ -25,7 +25,7 @@
     [self swizzle_showInfoPaneForCompletionItem:item];
     
     if ([item isKindOfClass:[KSImageNamedIndexCompletionItem class]]) {
-        NSImage *image = [[[NSImage alloc] initWithContentsOfURL:((KSImageNamedIndexCompletionItem *)item).imageFileURL] autorelease];
+        NSImage *image = [[NSImage alloc] initWithContentsOfURL:((KSImageNamedIndexCompletionItem *)item).imageFileURL];
         [self showPreviewForImage:image];
     }
 }
@@ -47,7 +47,7 @@
     } else {
         NSRect imgRect = NSMakeRect(0.0, 0.0, image.size.width, image.size.height);
         
-        NSImageView *imageView = [[[NSImageView alloc] initWithFrame:imgRect] autorelease];
+        NSImageView *imageView = [[NSImageView alloc] initWithFrame:imgRect];
         imageView.image = image;
         
         NSWindow *completionListWindow = [self window];

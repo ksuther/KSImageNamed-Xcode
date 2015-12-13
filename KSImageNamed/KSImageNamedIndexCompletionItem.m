@@ -38,26 +38,19 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [self setFileURL:nil];
-    
-    [super dealloc];
-}
-
 - (void)_fillInTheRest
 {
     
 }
 
-- (long long)priority
+- (double)priority
 {
     return 9999;
 }
 
 - (NSURL *)imageFileURL
 {
-    NSURL *imageFileURL = nil;
+    NSURL *imageFileURL;
     
     if ([self isInAssetCatalog]) {
         //Pull the first image out of the imageset's Contents.json
@@ -161,7 +154,11 @@
 
 - (NSString *)_imageNamedText
 {
-    return [NSString stringWithFormat:@"@\"%@\"", [self _fileName]];
+    if ([self forSwift]) {
+        return [NSString stringWithFormat:@"\"%@\"", [self _fileName]];
+    } else {
+        return [NSString stringWithFormat:@"@\"%@\"", [self _fileName]];
+    }
 }
 
 @end

@@ -10,7 +10,27 @@
 		<key>methodName</key>
 		<string>imageNamed</string>
 		<key>comment</key>
-		<string>Standard NSImage/UIImage method</string>
+		<string>Standard NSImage/UIImage method in Objective-C</string>
+	</dict>
+	<dict>
+		<key>classAndMethod</key>
+		<string>Image.init(named: </string>
+		<key>methodDeclaration</key>
+		<string> init(named: </string>
+		<key>methodName</key>
+		<string>init(named: </string>
+		<key>comment</key>
+		<string>Standard NSImage/UIImage method in Swift</string>
+	</dict>
+	<dict>
+		<key>classAndMethod</key>
+		<string>Image(named: </string>
+		<key>methodDeclaration</key>
+		<string>Image(named: </string>
+		<key>methodName</key>
+		<string>Image(named: </string>
+		<key>comment</key>
+		<string>Shorthand NSImage/UIImage init in Swift</string>
 	</dict>
 	<dict>
 		<key>classAndMethod</key>
