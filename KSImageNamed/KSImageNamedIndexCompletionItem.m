@@ -12,7 +12,10 @@
 @interface KSImageNamedIndexCompletionItem () {
     BOOL _imageIncludeExtension;
 }
+
 @property(nonatomic, assign, getter=isInAssetCatalog) BOOL inAssetCatalog;
+@property(nonatomic, copy) NSString *namespace;
+
 @end
 
 @implementation KSImageNamedIndexCompletionItem
@@ -27,11 +30,12 @@
     return self;
 }
 
-- (id)initWithAssetFileURL:(NSURL *)fileURL
+- (id)initWithAssetFileURL:(NSURL *)fileURL namespace:(NSString *)namespace
 {
     if ( (self = [super init]) ) {
         [self setFileURL:fileURL];
         [self setInAssetCatalog:YES];
+        [self setNamespace:namespace];
         
         _imageIncludeExtension = NO;
     }
@@ -139,6 +143,10 @@
     }
     if (!_imageIncludeExtension) {
         fileName = [fileName stringByDeletingPathExtension];
+    }
+
+    if ([self isInAssetCatalog] && [self namespace]) {
+        fileName = [[self namespace] stringByAppendingPathComponent:fileName];
     }
     
     return fileName;

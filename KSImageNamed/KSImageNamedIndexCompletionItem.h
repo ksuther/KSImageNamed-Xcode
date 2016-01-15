@@ -111,6 +111,6 @@
 @property(nonatomic, assign, getter=isInAssetCatalog, readonly) BOOL inAssetCatalog;
 
 - (id)initWithFileURL:(NSURL *)fileURL includeExtension:(BOOL)includeExtension;
-- (id)initWithAssetFileURL:(NSURL *)fileURL;
+- (id)initWithAssetFileURL:(NSURL *)fileURL namespace:(NSString *)namespace;
 
 @end

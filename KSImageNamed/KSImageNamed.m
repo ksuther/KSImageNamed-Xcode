@@ -280,6 +280,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
     NSMutableArray *imageCompletions = [NSMutableArray array];
     NSArray *properties = @[NSURLNameKey, NSURLIsDirectoryKey];
     NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[filePath fileURL] includingPropertiesForKeys:properties options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:nil];
+    NSMutableDictionary<NSURL *, NSString *> *namespaces = [NSMutableDictionary dictionary];
     
     for (NSURL *nextURL in enumerator) {
         NSString *fileName;
@@ -287,7 +288,8 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
         
         if ([nextURL getResourceValue:&fileName forKey:NSURLNameKey error:NULL] && [nextURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL] && [isDirectory boolValue]) {
             if ([[fileName pathExtension] caseInsensitiveCompare:@"imageset"] == NSOrderedSame) {
-                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL];
+                NSString *namespace = [namespaces objectForKey:[nextURL URLByDeletingLastPathComponent]];
+                KSImageNamedIndexCompletionItem *imageCompletion = [[KSImageNamedIndexCompletionItem alloc] initWithAssetFileURL:nextURL namespace:namespace];
 
                 if ([imageCompletion imageFileURL]) {
                     // Only add the completion if there's an image in the set
@@ -295,6 +297,47 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
                 }
                 
                 [enumerator skipDescendants];
+            } else if ([[fileName pathExtension] length] == 0) {
+                // Check if this directory defines a namespace
+                NSURL *contentsURL = [nextURL URLByAppendingPathComponent:@"Contents.json"];
+                NSData *contentsData = [NSData dataWithContentsOfURL:contentsURL];
+                BOOL registeredNamespace = NO;
+
+                if (contentsData) {
+                    NSDictionary *contentsJSON = [NSJSONSerialization JSONObjectWithData:contentsData options:0 error:NULL];
+
+                    if ([contentsJSON isKindOfClass:[NSDictionary class]]) {
+                        BOOL providesNamespace = [[[contentsJSON objectForKey:@"properties"] objectForKey:@"provides-namespace"] boolValue];
+
+                        if (providesNamespace) {
+                            // Add the namespace to the namespaces dictionary
+                            NSURL *namespaceKey = nextURL;
+                            NSString *namespace = fileName;
+
+                            // Check if there's a parent namespace (namespaces can be nested)
+                            NSURL *parentNamespaceKey = [namespaceKey URLByDeletingLastPathComponent];
+                            NSString *parentNamespace = [namespaces objectForKey:parentNamespaceKey];
+
+                            if (parentNamespace) {
+                                namespace = [parentNamespace stringByAppendingPathComponent:namespace];
+                            }
+
+                            [namespaces setObject:namespace forKey:namespaceKey];
+
+                            registeredNamespace = YES;
+                        }
+                    }
+                }
+
+                if (!registeredNamespace) {
+                    // There may be a parent namespace that we need to inherit
+                    NSURL *inheritedNamespaceKey = [nextURL URLByDeletingLastPathComponent];
+                    NSString *inheritedNamespace = [namespaces objectForKey:inheritedNamespaceKey];
+
+                    if (inheritedNamespace) {
+                        [namespaces setObject:inheritedNamespace forKey:nextURL];
+                    }
+                }
             }
         }
     }
