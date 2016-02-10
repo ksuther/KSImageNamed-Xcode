@@ -26,12 +26,15 @@
         if ([[language identifier] isEqualToString:@"Xcode.SourceCodeLanguage.Swift"]) {
             // sourceModel isn't available in Swift, check the string manually
             NSRange newlineRange = [string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch range:NSMakeRange(0, NSMaxRange(selectedRange))];
-            NSString *lineString = [string substringWithRange:NSMakeRange(newlineRange.location, NSMaxRange(selectedRange) - newlineRange.location)];
 
-            for (NSString *nextString in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
-                if ([lineString hasSuffix:nextString]) {
-                    atImageNamed = YES;
-                    break;
+            if (newlineRange.location != NSNotFound) {
+                NSString *lineString = [string substringWithRange:NSMakeRange(newlineRange.location, NSMaxRange(selectedRange) - newlineRange.location)];
+
+                for (NSString *nextString in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
+                    if ([lineString hasSuffix:nextString]) {
+                        atImageNamed = YES;
+                        break;
+                    }
                 }
             }
         } else {
