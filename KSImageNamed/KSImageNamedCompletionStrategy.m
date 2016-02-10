@@ -24,7 +24,7 @@
         id textStorage = [arg2 objectForKey:@"DVTTextCompletionContextTextStorage"];
 
         if ([[language identifier] isEqualToString:@"Xcode.SourceCodeLanguage.Swift"]) {
-            // sourceModel is available in Swift, check the string manually
+            // sourceModel isn't available in Swift, check the string manually
             NSRange newlineRange = [string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch range:NSMakeRange(0, NSMaxRange(selectedRange))];
             NSString *lineString = [string substringWithRange:NSMakeRange(newlineRange.location, NSMaxRange(selectedRange) - newlineRange.location)];
 
