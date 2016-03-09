@@ -11,9 +11,15 @@ Developed and tested against Xcode 7. Objective-C and Swift are both supported.
 
 ## How do I use it?
 
+### Manually
+
 Build the KSImageNamed target in the Xcode project and the plug-in will automatically be installed in `~/Library/Developer/Xcode/Plug-ins`. Relaunch Xcode and `imageNamed:` will magically start autocompleting your images.
 
 **Important**: Old versions of KSImageNamed were installed in `~/Library/Developer/Application Support/Developer/Shared/Xcode/Plug-ins`. Make sure to remove `KSImageNamed.xcplugin` from there before installing the new one.
+
+### Alcatraz
+
+Install [Alcatraz](http://alcatraz.io/), restart Xcode and press ⇧⌘9. You can find `KSImageNamed` in the list and click the icon on the left to install.
 
 ## How do I include file extensions when autocompleting?
 
