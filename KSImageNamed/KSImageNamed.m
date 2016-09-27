@@ -82,7 +82,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 
 - (void)removeImageCompletionsForIndex:(id)index
 {
-    NSString *workspaceName = [index workspaceName];
+    NSString *workspaceName = [index respondsToSelector:@selector(workspaceName)] ? [index workspaceName] : [[index workspace] name];
     
     if (workspaceName && [[self imageCompletions] objectForKey:workspaceName]) {
         [[self imageCompletions] removeObjectForKey:workspaceName];
@@ -91,7 +91,8 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 
 - (NSArray *)imageCompletionsForIndex:(id)index language:(id)language
 {
-    NSArray *completions = [[self imageCompletions] objectForKey:[index workspaceName]];
+    NSString *workspaceName = [index respondsToSelector:@selector(workspaceName)] ? [index workspaceName] : [[index workspace] name];
+    NSArray *completions = [[self imageCompletions] objectForKey:workspaceName];
     
     if (!completions) {
         completions = [self _rebuildCompletionsForIndex:index];
@@ -161,7 +162,7 @@ NSString * const KSShowExtensionInImageCompletionDefaultKey = @"KSShowExtensionI
 
 - (NSArray *)_rebuildCompletionsForIndex:(id)index
 {
-    NSString *workspaceName = [index workspaceName];
+    NSString *workspaceName = [index respondsToSelector:@selector(workspaceName)] ? [index workspaceName] : [[index workspace] name];
     NSArray *completions;
     
     if (workspaceName) {
