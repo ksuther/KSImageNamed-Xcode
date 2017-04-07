@@ -43,7 +43,13 @@
             
             for (NSString *nextClassAndMethod in [[KSImageNamed sharedPlugin] completionStringsForType:KSImageNamedCompletionStringTypeClassAndMethod]) {
                 if ([line hasSuffix:nextClassAndMethod]) {
-                    shouldAutoComplete = YES;
+                    id document = [[[self window] windowController] document];
+                    id index = [[document performSelector:@selector(workspace)] performSelector:@selector(index)];
+                    NSArray *completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index];
+                    
+                    if ([completions count] > 0) {
+                        shouldAutoComplete = YES;
+                    }
                     break;
                 }
             }

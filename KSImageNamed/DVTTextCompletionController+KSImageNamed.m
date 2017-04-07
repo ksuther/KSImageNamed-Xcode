@@ -33,8 +33,14 @@
                     NSString *insertedString = [[[self textView] string] substringWithRange:NSMakeRange(range.location - [nextClassAndMethod length], [nextClassAndMethod length])];
                     
                     if ([insertedString isEqualToString:nextClassAndMethod]) {
-                        [[self textView] insertText:@"" replacementRange:range];
-                        [self _showCompletionsAtCursorLocationExplicitly:YES];
+                        id document = [[[self.textView window] windowController] document];
+                        id index = [[document performSelector:@selector(workspace)] performSelector:@selector(index)];
+                        NSArray *completions = [[KSImageNamed sharedPlugin] imageCompletionsForIndex:index];
+                        
+                        if ([completions count] > 0) {
+                            [[self textView] insertText:@"" replacementRange:range];
+                            [self _showCompletionsAtCursorLocationExplicitly:YES];
+                        }
                     }
                 }
             }
